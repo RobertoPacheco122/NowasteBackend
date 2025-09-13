@@ -26,6 +26,16 @@ public class NowasteClassFixture(CustomWebApplicationFactory customWebApplicatio
         return await _httpClient.GetAsync(requestUri);
     }
 
+    protected async Task<HttpResponseMessage> DoPut(
+        string requestUri,
+        object request,
+        string token
+    ) {
+        AuthorizeToken(token);
+
+        return await _httpClient.PutAsJsonAsync(requestUri, request);
+    }
+
     private void AuthorizeToken(string token) {
         if (string.IsNullOrWhiteSpace(token))
             return;
