@@ -2,13 +2,18 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nowaste.Domain.Repositories;
-using Nowaste.Domain.Repositories.Persons;
-using Nowaste.Domain.Repositories.Users;
+using Nowaste.Domain.Repositories.Address;
+using Nowaste.Domain.Repositories.Establishment;
+using Nowaste.Domain.Repositories.Person;
+using Nowaste.Domain.Repositories.User;
 using Nowaste.Domain.Security.Cryptography;
 using Nowaste.Domain.Security.Tokens;
 using Nowaste.Domain.Services.LoggedUser;
 using Nowaste.Infrastructure.DataAccess;
-using Nowaste.Infrastructure.DataAccess.Repositories;
+using Nowaste.Infrastructure.DataAccess.Repositories.Address;
+using Nowaste.Infrastructure.DataAccess.Repositories.Establishment;
+using Nowaste.Infrastructure.DataAccess.Repositories.Person;
+using Nowaste.Infrastructure.DataAccess.Repositories.User;
 using Nowaste.Infrastructure.Extensions;
 using Nowaste.Infrastructure.Security.Tokens;
 using Nowaste.Infrastructure.Services.LoggedUser;
@@ -36,8 +41,17 @@ public static class DependencyInjectionExtension {
 
     private static void AddRepositories(IServiceCollection services) {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddScoped<IUserRepository, UsersRepository>();
-        services.AddScoped<IPersonRepository, PersonsRepository>();
+
+        services.AddScoped<IUserReadOnlyRepository, UserRepository>();
+        services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
+        services.AddScoped<IUserUpdateOnlyRepository, UserRepository>();
+
+        services.AddScoped<IPersonReadOnlyRepository, PersonRepository>();
+        services.AddScoped<IPersonWriteOnlyRepository, PersonRepository>();
+
+        services.AddScoped<IAddressWriteOnlyRepository, AddressRepository>();
+
+        services.AddScoped<IEstablishmentRepository, EstablishmentRepository>();
     }
 
     private static void AddDbContext (IServiceCollection services, IConfiguration configuration) {

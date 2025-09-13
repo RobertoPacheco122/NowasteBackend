@@ -1,5 +1,5 @@
 ﻿using Moq;
-using Nowaste.Domain.Repositories.Persons;
+using Nowaste.Domain.Repositories.Person;
 
 namespace CommonTestUtilities.Repositories;
 public class PersonRepositoryBuilder {

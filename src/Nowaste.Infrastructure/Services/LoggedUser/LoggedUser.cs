@@ -23,6 +23,7 @@ public class LoggedUser(NowasteDbContext dbContext, ITokenProvider tokenProvider
 
         return await _dbContext
             .Users
+            .Include(user => user.Person)
             .AsNoTracking()
             .FirstAsync(user => user.Id == Guid.Parse(identifier));
     }

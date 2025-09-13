@@ -1,6 +1,4 @@
-﻿using Nowaste.Communication.Enums;
-
-namespace Nowaste.Communication.Requests.Users;
+﻿namespace Nowaste.Communication.Requests.Users;
 
 public class RequestRegisterUserJson {
     public string Email { get; set; } = string.Empty;

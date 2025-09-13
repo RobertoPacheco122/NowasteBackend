@@ -1,4 +1,6 @@
-﻿namespace Nowaste.Domain.Entities;
+﻿using Nowaste.Domain.Enums;
+
+namespace Nowaste.Domain.Entities;
 
 public class AddressEntity : BaseEntity {
     public required string StreetName { get; set; }
@@ -10,6 +12,7 @@ public class AddressEntity : BaseEntity {
     public required string ZipCode { get; set; }
     public double Latitude { get; set; }
     public double Longitude { get; set; }
+    public EAddressType AddressType { get; set; } = EAddressType.Home;
 
     public Guid? PersonId { get; set; }
     public virtual PersonEntity? Person { get; set; }

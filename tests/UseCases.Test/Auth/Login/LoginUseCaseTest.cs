@@ -1,6 +1,6 @@
 ﻿using CommonTestUtilities.Cryptography;
 using CommonTestUtilities.Entities;
-using CommonTestUtilities.Repositories;
+using CommonTestUtilities.Repositories.User;
 using CommonTestUtilities.Requests.Auth;
 using CommonTestUtilities.Token;
 using Nowaste.Application.UseCases.Auth.Login;
@@ -62,12 +62,12 @@ public class LoginUseCaseTest {
     }
 
     private static LoginUseCase CreateUseCase(UserEntity user, string? password = null) {
-        var userRepository = new UserRepositoryBuilder().GetUserByEmail(user).Build();
+        var userReadOnlyRepository = new UserReadOnlyRepositoryBuilder().GetUserByEmail(user).Build();
         var passwordEncrypter = new PasswordEncrypterBuild().Verify(password).Build();
         var tokenGenerator = JwtTokenGeneratorBuilder.Build();
 
         return new LoginUseCase(
-            userRepository,
+            userReadOnlyRepository,
             passwordEncrypter,
             tokenGenerator
         );
