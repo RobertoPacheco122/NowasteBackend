@@ -3,6 +3,7 @@ using Nowaste.Communication.Requests.Address;
 using Nowaste.Communication.Requests.Establishments;
 using Nowaste.Communication.Requests.Users;
 using Nowaste.Communication.Responses.Address;
+using Nowaste.Communication.Responses.Establishments;
 using Nowaste.Domain.Entities;
 
 namespace Nowaste.Application.AutoMapper;
@@ -28,6 +29,7 @@ public class AutoMapping : Profile {
 
     private void EntityToResponse() {
         CreateMap<AddressEntity, ResponseRegisteredAddressJson>();
+        CreateMap<AddressEntity, ResponseGetAllAddressesJson>();
     }
 }
  

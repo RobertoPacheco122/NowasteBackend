@@ -33,6 +33,8 @@ public class UpdateUserProfileUseCase(
         userEntity.Person.InstitutionId = request.InstitutionId;
         userEntity.Person.EstablishmentId = request.EstablishmentId;
 
+        userEntity.UpdatedAt = DateTime.UtcNow;
+
         _userUpdateOnlyRepository.Update(userEntity);
 
         await _unitOfWork.Commit();

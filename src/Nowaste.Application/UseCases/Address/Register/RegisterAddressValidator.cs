@@ -12,7 +12,7 @@ public partial class RegisterAddressValidator : AbstractValidator<RequestRegiste
 
         RuleFor(address => address.Number)
             .NotEmpty()
-            .WithMessage("O endereço é obrigatório.");
+            .WithMessage("O número do endereço é obrigatório.");
 
         RuleFor(address => address.City)
             .NotEmpty()
