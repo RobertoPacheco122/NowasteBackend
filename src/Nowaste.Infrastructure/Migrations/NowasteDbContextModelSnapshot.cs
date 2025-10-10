@@ -28,6 +28,9 @@ namespace Nowaste.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<int>("AddressType")
+                        .HasColumnType("integer");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("text");
@@ -88,7 +91,7 @@ namespace Nowaste.Infrastructure.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("Nowaste.Domain.Entities.EstablishmentEntity", b =>
@@ -97,10 +100,8 @@ namespace Nowaste.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("AddressId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Cnpj")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
@@ -110,9 +111,6 @@ namespace Nowaste.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("EstablishmentType")
-                        .HasColumnType("integer");
-
                     b.Property<string>("ExhibitionName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -121,17 +119,15 @@ namespace Nowaste.Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("LegalName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ResponsibleCpf")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ResponsibleName")
-                        .HasColumnType("text");
+                    b.Property<double>("ServiceRadiusInMeters")
+                        .HasColumnType("double precision");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
@@ -141,6 +137,7 @@ namespace Nowaste.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("TradeName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -148,7 +145,7 @@ namespace Nowaste.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Establishments");
+                    b.ToTable("Establishments", (string)null);
                 });
 
             modelBuilder.Entity("Nowaste.Domain.Entities.InstitutionEntity", b =>
@@ -199,7 +196,41 @@ namespace Nowaste.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Institutions");
+                    b.ToTable("Institutions", (string)null);
+                });
+
+            modelBuilder.Entity("Nowaste.Domain.Entities.OperatingDayEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<TimeOnly>("ClosingTime")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("EstablishmentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<TimeOnly>("OpeningTime")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EstablishmentId");
+
+                    b.ToTable("OperatingDays", (string)null);
                 });
 
             modelBuilder.Entity("Nowaste.Domain.Entities.OrderEntity", b =>
@@ -264,7 +295,7 @@ namespace Nowaste.Infrastructure.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Nowaste.Domain.Entities.OrderItemEntity", b =>
@@ -308,7 +339,7 @@ namespace Nowaste.Infrastructure.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("Nowaste.Domain.Entities.PersonEntity", b =>
@@ -363,7 +394,7 @@ namespace Nowaste.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Persons");
+                    b.ToTable("Persons", (string)null);
                 });
 
             modelBuilder.Entity("Nowaste.Domain.Entities.ProductCategoryEntity", b =>
@@ -391,7 +422,7 @@ namespace Nowaste.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductCategories");
+                    b.ToTable("ProductCategories", (string)null);
                 });
 
             modelBuilder.Entity("Nowaste.Domain.Entities.ProductEntity", b =>
@@ -438,7 +469,7 @@ namespace Nowaste.Infrastructure.Migrations
 
                     b.HasIndex("ProductCategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Nowaste.Domain.Entities.ProductPriceHistoryEntity", b =>
@@ -450,23 +481,23 @@ namespace Nowaste.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<decimal?>("DiscountPercentage")
-                        .HasColumnType("numeric");
-
                     b.Property<DateTime>("EffectiveDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
+                    b.Property<int>("Price")
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uuid");
 
-                    b.Property<decimal>("SalePrice")
-                        .HasColumnType("numeric");
+                    b.Property<int>("SalePrice")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("ShowDiscountAsPercentage")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -475,7 +506,7 @@ namespace Nowaste.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductPricesHistory");
+                    b.ToTable("ProductPricesHistory", (string)null);
                 });
 
             modelBuilder.Entity("Nowaste.Domain.Entities.ReviewEntity", b =>
@@ -522,7 +553,7 @@ namespace Nowaste.Infrastructure.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("Nowaste.Domain.Entities.UserEntity", b =>
@@ -557,7 +588,7 @@ namespace Nowaste.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Nowaste.Domain.Entities.AddressEntity", b =>
@@ -579,6 +610,17 @@ namespace Nowaste.Infrastructure.Migrations
                     b.Navigation("Institution");
 
                     b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("Nowaste.Domain.Entities.OperatingDayEntity", b =>
+                {
+                    b.HasOne("Nowaste.Domain.Entities.EstablishmentEntity", "Establishment")
+                        .WithMany("OperatingDays")
+                        .HasForeignKey("EstablishmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Establishment");
                 });
 
             modelBuilder.Entity("Nowaste.Domain.Entities.OrderEntity", b =>
@@ -686,6 +728,8 @@ namespace Nowaste.Infrastructure.Migrations
             modelBuilder.Entity("Nowaste.Domain.Entities.EstablishmentEntity", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("OperatingDays");
 
                     b.Navigation("Persons");
 

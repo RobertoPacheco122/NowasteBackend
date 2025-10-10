@@ -9,13 +9,13 @@ using Nowaste.Exception.ExceptionBase;
 namespace Nowaste.Application.UseCases.Address.Register;
 
 public class RegisterAddressUseCase(
-        IAddressWriteOnlyRepository addressWriteOnlyRepository,
         IUnitOfWork unitOfWork,
-        IMapper mapper
+        IMapper mapper,
+        IAddressWriteOnlyRepository addressWriteOnlyRepository
     ) : IRegisterAddressUseCase {
-    private readonly IAddressWriteOnlyRepository _addressWriteOnlyRepository = addressWriteOnlyRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
+    private readonly IAddressWriteOnlyRepository _addressWriteOnlyRepository = addressWriteOnlyRepository;
 
     public async Task<ResponseRegisteredAddressJson> Execute(RequestRegisterAddressJson request) {
         Validate(request);

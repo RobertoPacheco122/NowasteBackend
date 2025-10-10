@@ -24,11 +24,11 @@ public class UserController : ControllerBase {
         return Created(string.Empty, response);
     }
 
-    [HttpPut]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    [HttpPut]
     public async Task<IActionResult> UpdateProfile(
         [FromServices] IUpdateUserProfileUseCase useCase,
         [FromBody] RequestUpdateUserProfileJson request

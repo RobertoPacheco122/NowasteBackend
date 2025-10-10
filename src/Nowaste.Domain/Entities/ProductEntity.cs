@@ -13,5 +13,5 @@ public class ProductEntity : BaseEntity {
     public virtual required ProductCategoryEntity ProductCategory { get; set; }
     public Guid EstablishmentId { get; set; }
     public virtual required EstablishmentEntity Establishment { get; set; }
-    public ICollection<ProductPriceHistoryEntity>? PriceHistories { get; set; }
+    public ICollection<ProductPriceHistoryEntity> PriceHistories { get; set; } = [];
 }

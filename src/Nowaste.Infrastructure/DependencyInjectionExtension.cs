@@ -5,6 +5,7 @@ using Nowaste.Domain.Repositories;
 using Nowaste.Domain.Repositories.Address;
 using Nowaste.Domain.Repositories.Establishment;
 using Nowaste.Domain.Repositories.Person;
+using Nowaste.Domain.Repositories.Product;
 using Nowaste.Domain.Repositories.User;
 using Nowaste.Domain.Security.Cryptography;
 using Nowaste.Domain.Security.Tokens;
@@ -13,6 +14,7 @@ using Nowaste.Infrastructure.DataAccess;
 using Nowaste.Infrastructure.DataAccess.Repositories.Address;
 using Nowaste.Infrastructure.DataAccess.Repositories.Establishment;
 using Nowaste.Infrastructure.DataAccess.Repositories.Person;
+using Nowaste.Infrastructure.DataAccess.Repositories.Product;
 using Nowaste.Infrastructure.DataAccess.Repositories.User;
 using Nowaste.Infrastructure.Extensions;
 using Nowaste.Infrastructure.Security.Tokens;
@@ -42,16 +44,24 @@ public static class DependencyInjectionExtension {
     private static void AddRepositories(IServiceCollection services) {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        services.AddScoped<IUserReadOnlyRepository, UserRepository>();
-        services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
-        services.AddScoped<IUserUpdateOnlyRepository, UserRepository>();
+        services.AddScoped<IUserWriteOnlyRepository, UserWriteOnlyRepository>();
+        services.AddScoped<IUserReadOnlyRepository, UserReadOnlyRepository>();
+        services.AddScoped<IUserUpdateOnlyRepository, UserUpdateOnlyRepository>();
 
-        services.AddScoped<IPersonReadOnlyRepository, PersonRepository>();
-        services.AddScoped<IPersonWriteOnlyRepository, PersonRepository>();
+        services.AddScoped<IPersonWriteOnlyRepository, PersonWriteOnlyRepository>();
+        services.AddScoped<IPersonReadOnlyRepository, PersonReadOnlyRepository>();
 
-        services.AddScoped<IAddressWriteOnlyRepository, AddressRepository>();
+        services.AddScoped<IAddressWriteOnlyRepository, AddressWriteOnlyRepository>();
+        services.AddScoped<IAddressReadOnlyRepository, AddressReadOnlyRepository>();
+        services.AddScoped<IAddressUpdateOnlyRepository, AddressUpdateOnlyRepository>();
 
-        services.AddScoped<IEstablishmentRepository, EstablishmentRepository>();
+        services.AddScoped<IEstablishmentWriteOnlyRepository, EstablishmentWriteOnlyRepository>();
+        services.AddScoped<IEstablishmentReadOnlyRepository, EstablishmentReadOnlyRepository>();
+        services.AddScoped<IEstablishmentUpdateOnlyRepository, EstablishmentUpdateOnlyRepository>();
+
+        services.AddScoped<IProductWriteOnlyRepository, ProductWriteOnlyRepository>();
+        services.AddScoped<IProductReadOnlyRepository, ProductReadOnlyRepository>();
+        services.AddScoped<IProductUpdateOnlyRepository, ProductUpdateOnlyRepository>();
     }
 
     private static void AddDbContext (IServiceCollection services, IConfiguration configuration) {
