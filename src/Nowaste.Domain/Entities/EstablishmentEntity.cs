@@ -10,9 +10,12 @@ public class EstablishmentEntity : BaseEntity {
     public required string Email { get; set; }
     public string Telephone { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
+    public double ServiceRadiusInMeters { get; set; } = 1000;
     public EEstablishmentStatus Status { get; set; } = EEstablishmentStatus.AwaitingApproval;
 
     public virtual ICollection<AddressEntity> Addresses { get; set; } = [];
     public virtual ICollection<PersonEntity> Persons { get; set; } = [];
     public virtual ICollection<ReviewEntity> Reviews { get; set; } = [];
+    public virtual ICollection<OperatingDayEntity> OperatingDays { get; set; } = [];
+    public virtual ICollection<ProductEntity> Products { get; set; } = [];
 }

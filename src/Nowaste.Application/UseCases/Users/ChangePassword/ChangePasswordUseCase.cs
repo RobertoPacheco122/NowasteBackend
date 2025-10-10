@@ -24,7 +24,8 @@ public class ChangePasswordUseCase(
 
         Validate(request, authenticatedUser);
 
-        var useEntity = await _userUpdateOnlyRepository.GetById(authenticatedUser.Id);
+        var useEntity = await _userUpdateOnlyRepository.GetById(authenticatedUser.Id) ??
+            throw new NotFoundException("Usuário não encontrado.");
 
         useEntity.PasswordHash = _passwordEncrypter.Encrypt(request.NewPassword);
 

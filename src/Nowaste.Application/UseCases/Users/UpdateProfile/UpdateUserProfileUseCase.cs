@@ -4,7 +4,6 @@ using Nowaste.Domain.Repositories.Person;
 using Nowaste.Domain.Repositories.User;
 using Nowaste.Domain.Services.LoggedUser;
 using Nowaste.Exception.ExceptionBase;
-using System.Threading.Tasks;
 
 namespace Nowaste.Application.UseCases.Users.UpdateProfile;
 
@@ -24,7 +23,8 @@ public class UpdateUserProfileUseCase(
 
         var authenticatedUser = await _loggedUser.Get();
 
-        var userEntity = await _userUpdateOnlyRepository.GetById(authenticatedUser.Id);
+        var userEntity = await _userUpdateOnlyRepository.GetById(authenticatedUser.Id)
+            ?? throw new NotFoundException("Usuário não encontrado.");
 
         userEntity.Role = request.Role;
         userEntity.UserStatus = (Domain.Enums.EUserStatus)request.UserStatus;

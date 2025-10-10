@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Nowaste.Communication.Responses.Establishments;
+using Nowaste.Communication.Responses.Establishment;
 using Nowaste.Domain.Repositories.Address;
 using Nowaste.Exception.ExceptionBase;
 

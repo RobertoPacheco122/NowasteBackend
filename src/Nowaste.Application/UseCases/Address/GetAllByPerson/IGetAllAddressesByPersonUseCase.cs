@@ -1,4 +1,4 @@
-﻿using Nowaste.Communication.Responses.Establishments;
+﻿using Nowaste.Communication.Responses.Establishment;
 
 namespace Nowaste.Application.UseCases.Address.GetAllByPerson;
 
