@@ -15,7 +15,7 @@ public class RegisterEstablishmentValidator : AbstractValidator<RequestRegisterE
                 establishment => string.IsNullOrWhiteSpace(establishment.Cnpj) is false,
                 ApplyConditionTo.CurrentValidator
             )
-            .WithMessage("O CNPJ deve ter 14 caracteres.")
+            .WithMessage("O CNPJ deve ter 14 caracteres.");
 
         RuleFor(establishment => establishment.LegalName)
             .NotEmpty()
