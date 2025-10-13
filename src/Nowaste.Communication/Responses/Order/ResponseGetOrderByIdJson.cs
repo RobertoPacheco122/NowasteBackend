@@ -1,8 +1,10 @@
-﻿using Nowaste.Domain.Enums;
+﻿using Nowaste.Communication.Enums;
+using Nowaste.Communication.Responses.Establishment;
+using Nowaste.Communication.Responses.Users;
 
-namespace Nowaste.Domain.Entities;
+namespace Nowaste.Communication.Responses.Order;
 
-public class OrderEntity : BaseEntity {
+public class ResponseGetOrderByIdJson {
     public required string FriendlyId { get; set; } = string.Empty;
     public required DateTime OrderDate { get; set; }
     public EOrderStatus OrderStatus { get; set; }
@@ -17,9 +19,7 @@ public class OrderEntity : BaseEntity {
     public int Discount { get; set; }
     public required int Total { get; set; }
 
-    public Guid PersonId { get; set; }
-    public required PersonEntity Person { get; set; }
-    public Guid EstablishmentId { get; set; }
-    public required EstablishmentEntity Establishment { get; set; }
-    public ICollection<OrderItemEntity> OrderItems { get; set; } = [];
+    public ResponseGetEstablishmentByIdJson Establishment { get; set; } = null!;
+    public ResponseGetPersonByIdJson Person { get; set; } = null!;
+    public ICollection<ResponseGetOrderItemByIdJson> OrderItems { get; set; } = [];
 }

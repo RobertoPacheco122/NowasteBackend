@@ -17,6 +17,8 @@ using Nowaste.Application.UseCases.Establishment.RegisterOperatingDay;
 using Nowaste.Application.UseCases.Establishment.Update;
 using Nowaste.Application.UseCases.Establishment.UpdateOperatingDay;
 using Nowaste.Application.UseCases.Establishment.VinculateEmployee;
+using Nowaste.Application.UseCases.Order.GetById;
+using Nowaste.Application.UseCases.Order.Register;
 using Nowaste.Application.UseCases.Product.GetAllByEstablishment;
 using Nowaste.Application.UseCases.Product.GetAllCategories;
 using Nowaste.Application.UseCases.Product.GetById;
@@ -74,5 +76,8 @@ public static class DependencyInjectionExtension {
         services.AddScoped<IToggleIsProductActiveUseCase, ToggleIsProductActiveUseCase>();
         services.AddScoped<IUpdateProductUseCase, UpdateProductUseCase>();
         services.AddScoped<IUpdateProductPriceUseCase, UpdateProductPriceUseCase>();
+
+        services.AddScoped<IRegisterOrderUseCase, RegisterOrderUseCase>();
+        services.AddScoped<IGetOrderByIdUseCase, GetOrderByIdUseCase>();
     }
 }

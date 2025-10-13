@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nowaste.Infrastructure.DataAccess;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Nowaste.Infrastructure.Migrations
 {
     [DbContext(typeof(NowasteDbContext))]
-    partial class NowasteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251011234134_ProductWeight")]
+    partial class ProductWeight
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,9 +109,6 @@ namespace Nowaste.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("DeliveryFeeInCents")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -249,11 +249,11 @@ namespace Nowaste.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("DeliveryFee")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("DeliveryFee")
+                        .HasColumnType("numeric");
 
-                    b.Property<int>("Discount")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("numeric");
 
                     b.Property<Guid>("EstablishmentId")
                         .HasColumnType("uuid");
@@ -268,10 +268,6 @@ namespace Nowaste.Infrastructure.Migrations
                     b.Property<bool>("IsPaid")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Observations")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -284,14 +280,14 @@ namespace Nowaste.Infrastructure.Migrations
                     b.Property<Guid>("PersonId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Subtotal")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("numeric");
 
-                    b.Property<int>("Tax")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("Tax")
+                        .HasColumnType("numeric");
 
-                    b.Property<int>("Total")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("Total")
+                        .HasColumnType("numeric");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -326,9 +322,6 @@ namespace Nowaste.Infrastructure.Migrations
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -348,8 +341,6 @@ namespace Nowaste.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
                 });
@@ -665,15 +656,7 @@ namespace Nowaste.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Nowaste.Domain.Entities.ProductEntity", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Nowaste.Domain.Entities.PersonEntity", b =>

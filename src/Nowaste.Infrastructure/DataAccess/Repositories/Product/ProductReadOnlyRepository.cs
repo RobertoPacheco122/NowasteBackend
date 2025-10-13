@@ -28,6 +28,15 @@ internal class ProductReadOnlyRepository(NowasteDbContext dbContext) : IProductR
             .ToListAsync();
     }
 
+    public async Task<ICollection<ProductEntity>> GetAllByIds(ICollection<Guid> ids) {
+        return await _dbContext.Products
+            .AsNoTracking()
+            .Include(product => product.PriceHistories)
+            .Include(product => product.ProductCategory)
+            .Where(product => ids.Contains(product.Id))
+            .ToListAsync();
+    }
+
     public async Task<ICollection<ProductCategoryEntity>> GetAllCategories() {
         return await _dbContext.ProductCategories
             .AsNoTracking()

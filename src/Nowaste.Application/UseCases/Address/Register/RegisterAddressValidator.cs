@@ -27,13 +27,10 @@ public partial class RegisterAddressValidator : AbstractValidator<RequestRegiste
             .WithMessage("O CEP é obrigatório.")
 
             .Must(zipCode => !HasAnyLetters().IsMatch(zipCode))
+            .When(address => !string.IsNullOrWhiteSpace(address.ZipCode), ApplyConditionTo.CurrentValidator)
             .WithMessage("O CEP não pode conter letras.")
 
-            .MinimumLength(8)
-            .When(address => !string.IsNullOrWhiteSpace(address.ZipCode), ApplyConditionTo.CurrentValidator)
-            .WithMessage("O CEP deve ter 8 caracteres.")
-
-            .MaximumLength(8)
+            .Length(8)
             .When(address => !string.IsNullOrWhiteSpace(address.ZipCode), ApplyConditionTo.CurrentValidator)
             .WithMessage("O CEP deve ter 8 caracteres.");
 

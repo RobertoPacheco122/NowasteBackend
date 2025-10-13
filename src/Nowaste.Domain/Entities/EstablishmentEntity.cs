@@ -12,6 +12,7 @@ public class EstablishmentEntity : BaseEntity {
     public string PhoneNumber { get; set; } = string.Empty;
     public double ServiceRadiusInMeters { get; set; } = 1000;
     public EEstablishmentStatus Status { get; set; } = EEstablishmentStatus.AwaitingApproval;
+    public int DeliveryFeeInCents { get; set; } = 0;
 
     public virtual ICollection<AddressEntity> Addresses { get; set; } = [];
     public virtual ICollection<PersonEntity> Persons { get; set; } = [];

@@ -29,6 +29,10 @@ public class RegisterEstablishmentValidator : AbstractValidator<RequestRegisterE
             .NotEmpty()
             .WithMessage("O nome de exibição é obrigatório");
 
+        RuleFor(establishment => establishment.DeliveryFeeInCents)
+            .LessThan(0)
+            .WithMessage("A propriedade 'deliveryFeeInCents' não pode ser menor que 0 (zero).");
+
         RuleFor(establishment => establishment.Email)
             .NotEmpty()
             .WithMessage("O email é obrigatório.")

@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Nowaste.Domain.Repositories;
 using Nowaste.Domain.Repositories.Address;
 using Nowaste.Domain.Repositories.Establishment;
+using Nowaste.Domain.Repositories.Order;
 using Nowaste.Domain.Repositories.Person;
 using Nowaste.Domain.Repositories.Product;
 using Nowaste.Domain.Repositories.User;
@@ -13,6 +14,7 @@ using Nowaste.Domain.Services.LoggedUser;
 using Nowaste.Infrastructure.DataAccess;
 using Nowaste.Infrastructure.DataAccess.Repositories.Address;
 using Nowaste.Infrastructure.DataAccess.Repositories.Establishment;
+using Nowaste.Infrastructure.DataAccess.Repositories.Order;
 using Nowaste.Infrastructure.DataAccess.Repositories.Person;
 using Nowaste.Infrastructure.DataAccess.Repositories.Product;
 using Nowaste.Infrastructure.DataAccess.Repositories.User;
@@ -62,6 +64,9 @@ public static class DependencyInjectionExtension {
         services.AddScoped<IProductWriteOnlyRepository, ProductWriteOnlyRepository>();
         services.AddScoped<IProductReadOnlyRepository, ProductReadOnlyRepository>();
         services.AddScoped<IProductUpdateOnlyRepository, ProductUpdateOnlyRepository>();
+
+        services.AddScoped<IOrderWriteOnlyRepository, OrderWriteOnlyRepository>();
+        services.AddScoped<IOrderReadOnlyRepository, OrderReadOnlyRepository>();
     }
 
     private static void AddDbContext (IServiceCollection services, IConfiguration configuration) {

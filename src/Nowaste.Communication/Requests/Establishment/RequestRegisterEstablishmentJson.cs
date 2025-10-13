@@ -11,5 +11,6 @@ public class RequestRegisterEstablishmentJson {
     public string Telephone { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
     public double? ServiceRadiusInMeters { get; set; }
+    public int DeliveryFeeInCents { get; set; }
     public RequestRegisterAddressJson? OperationAddress { get; set; }
 }

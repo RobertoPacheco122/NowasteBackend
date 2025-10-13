@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using Nowaste.Communication.Requests.Address;
 using Nowaste.Communication.Requests.Establishment;
+using Nowaste.Communication.Requests.Order;
 using Nowaste.Communication.Requests.Product;
 using Nowaste.Communication.Requests.Users;
 using Nowaste.Communication.Responses.Address;
 using Nowaste.Communication.Responses.Establishment;
+using Nowaste.Communication.Responses.Order;
 using Nowaste.Communication.Responses.Product;
+using Nowaste.Communication.Responses.Users;
 using Nowaste.Domain.Entities;
 
 namespace Nowaste.Application.AutoMapper;
@@ -24,6 +27,7 @@ public class AutoMapping : Profile {
         CreateMap<RequestRegisterUserJson, PersonEntity>();
 
         CreateMap<RequestRegisterEstablishmentJson, EstablishmentEntity>();
+        CreateMap<RequestRegisterOperatingDayJson, OperatingDayEntity>();
 
         CreateMap<RequestRegisterAddressJson, AddressEntity>();
 
@@ -31,7 +35,8 @@ public class AutoMapping : Profile {
         CreateMap<RequestRegisterProductCategoryJson, ProductCategoryEntity>();
         CreateMap<RequestUpdateProductPriceJson, ProductPriceHistoryEntity>();
 
-        CreateMap<RequestRegisterOperatingDayJson, OperatingDayEntity>();
+        CreateMap<RequestRegisterOrderJson, OrderEntity>();
+        CreateMap<RequestRegisterOrderItemJson, OrderItemEntity>();
     }
 
     private void RequestToRequest() {
@@ -54,6 +59,11 @@ public class AutoMapping : Profile {
         CreateMap<ProductCategoryEntity, ResponseGetProductCategoryByIdJson>();
 
         CreateMap<EstablishmentEntity, ResponseGetEstablishmentByIdJson>();
+
+        CreateMap<OrderEntity, ResponseGetOrderByIdJson>();
+        CreateMap<OrderItemEntity, ResponseGetOrderItemByIdJson>();
+        
+        CreateMap<PersonEntity, ResponseGetPersonByIdJson>();
     }
 }
  
