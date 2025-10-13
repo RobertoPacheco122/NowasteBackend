@@ -2,7 +2,8 @@
 
 namespace Nowaste.Domain.Entities;
 
-public class AddressEntity : BaseEntity {
+public class AddressEntity : BaseEntity
+{
     public required string StreetName { get; set; }
     public required string Number { get; set; }
     public string Complement { get; set; } = string.Empty;

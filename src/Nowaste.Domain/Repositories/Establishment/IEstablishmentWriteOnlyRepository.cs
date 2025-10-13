@@ -2,7 +2,8 @@
 
 namespace Nowaste.Domain.Repositories.Establishment;
 
-public interface IEstablishmentWriteOnlyRepository {
+public interface IEstablishmentWriteOnlyRepository
+{
     Task Add(EstablishmentEntity establishment);
     Task AddOperatingDay(OperatingDayEntity operatingDay);
 }

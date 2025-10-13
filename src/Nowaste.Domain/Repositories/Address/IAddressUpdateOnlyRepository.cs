@@ -2,7 +2,8 @@
 
 namespace Nowaste.Domain.Repositories.Address;
 
-public interface IAddressUpdateOnlyRepository {
+public interface IAddressUpdateOnlyRepository
+{
     Task<AddressEntity?> GetById(Guid id);
     Task<ICollection<AddressEntity>> GetAllByEstablishment(Guid id);
     Task<ICollection<AddressEntity>> GetAllByInstitution(Guid id);

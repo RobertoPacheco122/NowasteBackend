@@ -2,7 +2,8 @@
 
 namespace Nowaste.Domain.Entities;
 
-public class OrderEntity : BaseEntity {
+public class OrderEntity : BaseEntity
+{
     public required string FriendlyId { get; set; } = string.Empty;
     public required DateTime OrderDate { get; set; }
     public EOrderStatus OrderStatus { get; set; }

@@ -2,7 +2,8 @@
 
 namespace Nowaste.Domain.Entities;
 
-public class EstablishmentEntity : BaseEntity {
+public class EstablishmentEntity : BaseEntity
+{
     public required string Cnpj { get; set; }
     public required string LegalName { get; set; }
     public required string TradeName { get; set; }

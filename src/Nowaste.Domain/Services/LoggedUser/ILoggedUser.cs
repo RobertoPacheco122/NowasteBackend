@@ -2,6 +2,7 @@
 
 namespace Nowaste.Domain.Services.LoggedUser;
 
-public interface ILoggedUser {
+public interface ILoggedUser
+{
     Task<UserEntity> Get();
 }

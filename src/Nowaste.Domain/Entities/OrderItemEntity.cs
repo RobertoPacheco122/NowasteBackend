@@ -1,6 +1,7 @@
 ﻿namespace Nowaste.Domain.Entities;
 
-public class OrderItemEntity : BaseEntity {
+public class OrderItemEntity : BaseEntity
+{
     public required string ProductName { get; set; }
     public required int UnitPrice { get; set; }
     public required int ItemQuantity { get; set; }

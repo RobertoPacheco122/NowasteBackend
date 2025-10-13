@@ -1,6 +1,7 @@
 ﻿namespace Nowaste.Domain.Enums;
 
-public enum EAddressType {
+public enum EAddressType
+{
     Home = 1,
     Work = 2,
     Operational = 3,
