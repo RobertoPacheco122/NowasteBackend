@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Users.UpdateProfile;
 
-public interface IUpdateUserProfileUseCase {
+public interface IUpdateUserProfileUseCase
+{
     public Task Execute(RequestUpdateUserProfileJson request);
 }

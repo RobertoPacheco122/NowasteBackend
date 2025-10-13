@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Product.UpdatePrice;
 
-public interface IUpdateProductPriceUseCase {
+public interface IUpdateProductPriceUseCase
+{
     Task Execute(Guid productId, RequestUpdateProductPriceJson request);
 }

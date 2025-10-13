@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Establishment.Update;
 
-public interface IUpdateEstablishmentUseCase {
+public interface IUpdateEstablishmentUseCase
+{
     Task Execute(Guid establishmentId, RequestUpdateEstablishmentJson request);
 }

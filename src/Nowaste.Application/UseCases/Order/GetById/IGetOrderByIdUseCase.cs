@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Order.GetById;
 
-public interface IGetOrderByIdUseCase {
+public interface IGetOrderByIdUseCase
+{
     Task<ResponseGetOrderByIdJson> Execute(Guid orderId);
 }

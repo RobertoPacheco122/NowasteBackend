@@ -13,15 +13,17 @@ using Nowaste.Domain.Entities;
 
 namespace Nowaste.Application.AutoMapper;
 
-public class AutoMapping : Profile {
-
-    public AutoMapping() {
+public class AutoMapping : Profile
+{
+    public AutoMapping()
+    {
         RequestToEntity();
         EntityToResponse();
         RequestToRequest();
     }
 
-    private void RequestToEntity() {
+    private void RequestToEntity()
+    {
         CreateMap<RequestRegisterUserJson, UserEntity>();
 
         CreateMap<RequestRegisterUserJson, PersonEntity>();
@@ -39,11 +41,10 @@ public class AutoMapping : Profile {
         CreateMap<RequestRegisterOrderItemJson, OrderItemEntity>();
     }
 
-    private void RequestToRequest() {
+    private void RequestToRequest() { }
 
-    }
-
-    private void EntityToResponse() {
+    private void EntityToResponse()
+    {
         CreateMap<AddressEntity, ResponseRegisteredAddressJson>();
         CreateMap<AddressEntity, ResponseGetAllAddressesJson>();
         CreateMap<AddressEntity, ResponseGetAddressByIdJson>();
@@ -62,8 +63,7 @@ public class AutoMapping : Profile {
 
         CreateMap<OrderEntity, ResponseGetOrderByIdJson>();
         CreateMap<OrderItemEntity, ResponseGetOrderItemByIdJson>();
-        
+
         CreateMap<PersonEntity, ResponseGetPersonByIdJson>();
     }
 }
- 

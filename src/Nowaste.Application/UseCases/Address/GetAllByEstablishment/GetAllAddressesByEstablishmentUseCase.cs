@@ -6,17 +6,22 @@ using Nowaste.Exception.ExceptionBase;
 namespace Nowaste.Application.UseCases.Address.GetAllByEstablishment;
 
 public class GetAllAddressesByEstablishmentUseCase(
-        IMapper mapper,
-        IAddressReadOnlyRepository addressReadOnlyRepository
-    ) : IGetAllAddressesByEstablishmentUseCase {
+    IMapper mapper,
+    IAddressReadOnlyRepository addressReadOnlyRepository
+) : IGetAllAddressesByEstablishmentUseCase
+{
     private readonly IMapper _mapper = mapper;
-    private readonly IAddressReadOnlyRepository _addressReadOnlyRepository = addressReadOnlyRepository;
+    private readonly IAddressReadOnlyRepository _addressReadOnlyRepository =
+        addressReadOnlyRepository;
 
-    public async Task<ICollection<ResponseGetAllAddressesJson>> Execute(Guid establishmentId) {
+    public async Task<ICollection<ResponseGetAllAddressesJson>> Execute(Guid establishmentId)
+    {
         var addresses = await _addressReadOnlyRepository.GetAllByEstablishment(establishmentId);
 
         if (addresses is null || addresses.Count == 0)
-            throw new NotFoundException("Não foram encontrados endereços para este estabelecimento.");
+            throw new NotFoundException(
+                "Não foram encontrados endereços para este estabelecimento."
+            );
 
         return _mapper.Map<ICollection<ResponseGetAllAddressesJson>>(addresses);
     }

@@ -3,8 +3,10 @@ using Nowaste.Communication.Requests.Order;
 
 namespace Nowaste.Application.UseCases.Order.Register;
 
-public class RegisterOrderValidator : AbstractValidator<RequestRegisterOrderJson> {
-    public RegisterOrderValidator() {
+public class RegisterOrderValidator : AbstractValidator<RequestRegisterOrderJson>
+{
+    public RegisterOrderValidator()
+    {
         RuleFor(order => order.AddressId)
             .NotEmpty()
             .WithMessage("A propriedade 'addressId' é obrigatória.")
@@ -22,18 +24,23 @@ public class RegisterOrderValidator : AbstractValidator<RequestRegisterOrderJson
             .WithMessage("A propriedade 'items' não pode ser vazia.");
 
         RuleForEach(order => order.Items)
-            .ChildRules(item => {
+            .ChildRules(item =>
+            {
                 item.RuleFor(i => i.ProductId)
                     .NotEmpty()
                     .WithMessage("A propriedade 'productId' de 'items' é obrigatória.")
                     .NotEqual(Guid.Empty)
-                    .WithMessage("A propriedade 'productId' de 'items' não pode ser um UUID vazio.");
+                    .WithMessage(
+                        "A propriedade 'productId' de 'items' não pode ser um UUID vazio."
+                    );
 
                 item.RuleFor(i => i.ItemQuantity)
                     .NotEmpty()
                     .WithMessage("A propriedade 'itemQuantity' de 'items' é obrigatória.")
                     .GreaterThan(0)
-                    .WithMessage("A propriedade 'itemQuantity' de 'items' deve ser maior que zero.");
+                    .WithMessage(
+                        "A propriedade 'itemQuantity' de 'items' deve ser maior que zero."
+                    );
             });
 
         RuleFor(order => order.OrderDate)

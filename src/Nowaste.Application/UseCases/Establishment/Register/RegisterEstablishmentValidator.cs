@@ -3,19 +3,19 @@ using Nowaste.Communication.Requests.Establishment;
 
 namespace Nowaste.Application.UseCases.Establishment.Register;
 
-public class RegisterEstablishmentValidator : AbstractValidator<RequestRegisterEstablishmentJson> {
-    public RegisterEstablishmentValidator() {
+public class RegisterEstablishmentValidator : AbstractValidator<RequestRegisterEstablishmentJson>
+{
+    public RegisterEstablishmentValidator()
+    {
         RuleFor(establishment => establishment.Cnpj)
             .NotEmpty()
             .WithMessage("O CNPJ é obrigatório.")
-
-            .MinimumLength(14)
-            .When(establishment => string.IsNullOrWhiteSpace(establishment.Cnpj) is false, ApplyConditionTo.CurrentValidator)
+            .Length(14)
+            .When(
+                establishment => string.IsNullOrWhiteSpace(establishment.Cnpj) is false,
+                ApplyConditionTo.CurrentValidator
+            )
             .WithMessage("O CNPJ deve ter 14 caracteres.")
-
-            .MaximumLength(14)
-            .When(establishment => string.IsNullOrWhiteSpace(establishment.Cnpj) is false, ApplyConditionTo.CurrentValidator)
-            .WithMessage("O CNPJ deve ter 14 caracteres.");
 
         RuleFor(establishment => establishment.LegalName)
             .NotEmpty()
@@ -37,7 +37,10 @@ public class RegisterEstablishmentValidator : AbstractValidator<RequestRegisterE
             .NotEmpty()
             .WithMessage("O email é obrigatório.")
             .EmailAddress()
-            .When(establishment => string.IsNullOrWhiteSpace(establishment.Email) is false, ApplyConditionTo.CurrentValidator)
+            .When(
+                establishment => string.IsNullOrWhiteSpace(establishment.Email) is false,
+                ApplyConditionTo.CurrentValidator
+            )
             .WithMessage("O email não é válido.");
     }
 }

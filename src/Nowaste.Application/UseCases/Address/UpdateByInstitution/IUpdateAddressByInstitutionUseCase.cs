@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Address.UpdateByInstitution;
 
-public interface IUpdateAddressByInstitutionUseCase {
+public interface IUpdateAddressByInstitutionUseCase
+{
     Task Execute(Guid institutionId, RequestRegisterAddressJson request);
 }

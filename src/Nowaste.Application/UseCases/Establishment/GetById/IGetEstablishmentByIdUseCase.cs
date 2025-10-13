@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Establishment.GetById;
 
-public interface IGetEstablishmentByIdUseCase {
+public interface IGetEstablishmentByIdUseCase
+{
     Task<ResponseGetEstablishmentByIdJson> Execute(Guid establishmentId);
 }

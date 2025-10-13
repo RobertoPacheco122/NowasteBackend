@@ -8,16 +8,21 @@ namespace Nowaste.Application.UseCases.Product.GetAllCategories;
 public class GetAllProductCategoriesUseCase(
     IMapper mapper,
     IProductReadOnlyRepository productReadOnlyRepository
-    ) : IGetAllProductCategoriesUseCase {
+) : IGetAllProductCategoriesUseCase
+{
     private readonly IMapper _mapper = mapper;
-    private readonly IProductReadOnlyRepository _productReadOnlyRepository = productReadOnlyRepository;
+    private readonly IProductReadOnlyRepository _productReadOnlyRepository =
+        productReadOnlyRepository;
 
-    public async Task<ICollection<ResponseGetAllProductCategoriesJson>> Execute() {
+    public async Task<ICollection<ResponseGetAllProductCategoriesJson>> Execute()
+    {
         var productCategoriesEntities = await _productReadOnlyRepository.GetAllCategories();
 
-        if(productCategoriesEntities.Count == 0)
+        if (productCategoriesEntities.Count == 0)
             throw new NotFoundException("Nenhuma categoria de produto encontrada.");
 
-        return _mapper.Map<ICollection<ResponseGetAllProductCategoriesJson>>(productCategoriesEntities);
+        return _mapper.Map<ICollection<ResponseGetAllProductCategoriesJson>>(
+            productCategoriesEntities
+        );
     }
 }

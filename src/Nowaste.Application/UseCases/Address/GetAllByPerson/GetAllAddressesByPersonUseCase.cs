@@ -6,13 +6,16 @@ using Nowaste.Exception.ExceptionBase;
 namespace Nowaste.Application.UseCases.Address.GetAllByPerson;
 
 public class GetAllAddressesByPersonUseCase(
-        IMapper mapper,
-        IAddressReadOnlyRepository addressReadOnlyRepository
-    ) : IGetAllAddressesByPersonUseCase {
+    IMapper mapper,
+    IAddressReadOnlyRepository addressReadOnlyRepository
+) : IGetAllAddressesByPersonUseCase
+{
     private readonly IMapper _mapper = mapper;
-    private readonly IAddressReadOnlyRepository _addressReadOnlyRepository = addressReadOnlyRepository;
+    private readonly IAddressReadOnlyRepository _addressReadOnlyRepository =
+        addressReadOnlyRepository;
 
-    public async Task<ICollection<ResponseGetAllAddressesJson>> Execute(Guid personId) {
+    public async Task<ICollection<ResponseGetAllAddressesJson>> Execute(Guid personId)
+    {
         var addresses = await _addressReadOnlyRepository.GetAllByPerson(personId);
 
         if (addresses is null || addresses.Count == 0)

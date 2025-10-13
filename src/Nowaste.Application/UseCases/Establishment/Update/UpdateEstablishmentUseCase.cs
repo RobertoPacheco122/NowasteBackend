@@ -6,19 +6,24 @@ using Nowaste.Exception.ExceptionBase;
 namespace Nowaste.Application.UseCases.Establishment.Update;
 
 internal class UpdateEstablishmentUseCase(
-        IUnitOfWork unitOfWork,
-        IEstablishmentReadOnlyRepository establishmentReadOnlyRepository,
-        IEstablishmentUpdateOnlyRepository establishmentUpdateOnlyRepository
-    ) : IUpdateEstablishmentUseCase {
+    IUnitOfWork unitOfWork,
+    IEstablishmentReadOnlyRepository establishmentReadOnlyRepository,
+    IEstablishmentUpdateOnlyRepository establishmentUpdateOnlyRepository
+) : IUpdateEstablishmentUseCase
+{
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
-    private readonly IEstablishmentReadOnlyRepository _establishmentReadOnlyRepository = establishmentReadOnlyRepository;
-    private readonly IEstablishmentUpdateOnlyRepository _establishmentUpdateOnlyRepository = establishmentUpdateOnlyRepository;
+    private readonly IEstablishmentReadOnlyRepository _establishmentReadOnlyRepository =
+        establishmentReadOnlyRepository;
+    private readonly IEstablishmentUpdateOnlyRepository _establishmentUpdateOnlyRepository =
+        establishmentUpdateOnlyRepository;
 
-    public async Task Execute(Guid establishmentId, RequestUpdateEstablishmentJson request) {
+    public async Task Execute(Guid establishmentId, RequestUpdateEstablishmentJson request)
+    {
         Validate(request);
 
-        var establishmentEntity = await _establishmentUpdateOnlyRepository.GetById(establishmentId) ??
-            throw new NotFoundException("Estabelecimento não encontrado.");
+        var establishmentEntity =
+            await _establishmentUpdateOnlyRepository.GetById(establishmentId)
+            ?? throw new NotFoundException("Estabelecimento não encontrado.");
 
         establishmentEntity.ExhibitionName = request.ExhibitionName;
         establishmentEntity.Email = request.Email;
@@ -33,10 +38,12 @@ internal class UpdateEstablishmentUseCase(
         await _unitOfWork.Commit();
     }
 
-    public static void Validate(RequestUpdateEstablishmentJson request) {
+    public static void Validate(RequestUpdateEstablishmentJson request)
+    {
         var validationResult = new UpdateEstablishmentValidator().Validate(request);
 
-        if (validationResult.IsValid is false) {
+        if (validationResult.IsValid is false)
+        {
             var errorsMessages = validationResult.Errors.Select(f => f.ErrorMessage).ToList();
 
             throw new ErrorOnValidationException(errorsMessages);

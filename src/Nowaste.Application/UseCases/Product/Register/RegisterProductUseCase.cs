@@ -10,19 +10,24 @@ using Nowaste.Exception.ExceptionBase;
 namespace Nowaste.Application.UseCases.Product.Register;
 
 public class RegisterProductUseCase(
-        IUnitOfWork unitOfWork,
-        IMapper mapper,
-        IProductWriteOnlyRepository productWriteOnlyRepository,
-        IProductReadOnlyRepository productReadOnlyRepository,
-        IEstablishmentReadOnlyRepository establishmentReadOnlyRepository
-    ) : IRegisterProductUseCase {
+    IUnitOfWork unitOfWork,
+    IMapper mapper,
+    IProductWriteOnlyRepository productWriteOnlyRepository,
+    IProductReadOnlyRepository productReadOnlyRepository,
+    IEstablishmentReadOnlyRepository establishmentReadOnlyRepository
+) : IRegisterProductUseCase
+{
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
-    private readonly IProductWriteOnlyRepository _productWriteOnlyRepository = productWriteOnlyRepository;
-    private readonly IProductReadOnlyRepository _productReadOnlyRepository = productReadOnlyRepository;
-    private readonly IEstablishmentReadOnlyRepository _establishmentReadOnlyRepository = establishmentReadOnlyRepository;
+    private readonly IProductWriteOnlyRepository _productWriteOnlyRepository =
+        productWriteOnlyRepository;
+    private readonly IProductReadOnlyRepository _productReadOnlyRepository =
+        productReadOnlyRepository;
+    private readonly IEstablishmentReadOnlyRepository _establishmentReadOnlyRepository =
+        establishmentReadOnlyRepository;
 
-    public async Task<ResponseRegisteredProductJson> Execute(RequestRegisterProductJson request) {
+    public async Task<ResponseRegisteredProductJson> Execute(RequestRegisterProductJson request)
+    {
         await Validate(request);
 
         var productEntity = _mapper.Map<ProductEntity>(request);
@@ -30,7 +35,8 @@ public class RegisterProductUseCase(
 
         await _productWriteOnlyRepository.AddProduct(productEntity);
 
-        var productPriceHistoryEntity = new ProductPriceHistoryEntity {
+        var productPriceHistoryEntity = new ProductPriceHistoryEntity
+        {
             CreatedAt = DateTime.UtcNow,
             ProductId = productEntity.Id,
             Price = request.Price,
@@ -42,7 +48,8 @@ public class RegisterProductUseCase(
 
         await _unitOfWork.Commit();
 
-        return new ResponseRegisteredProductJson {
+        return new ResponseRegisteredProductJson
+        {
             Id = productEntity.Id,
             Name = productEntity.Name,
             Description = productEntity.Description,
@@ -50,29 +57,37 @@ public class RegisterProductUseCase(
         };
     }
 
-    public async Task Validate(RequestRegisterProductJson request) {
+    public async Task Validate(RequestRegisterProductJson request)
+    {
         var validationResult = new RegisterProductValidator().Validate(request);
 
-        var existActiveProductCategoryWithGivenId = await _productReadOnlyRepository
-            .ExistActiveCategoryWithId(request.ProductCategoryId);
+        var existActiveProductCategoryWithGivenId =
+            await _productReadOnlyRepository.ExistActiveCategoryWithId(request.ProductCategoryId);
 
         if (existActiveProductCategoryWithGivenId is false)
-            validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure(
-                string.Empty,
-                "A categoria informada não existe.")
+            validationResult.Errors.Add(
+                new FluentValidation.Results.ValidationFailure(
+                    string.Empty,
+                    "A categoria informada não existe."
+                )
             );
-        
-        var existActiveEstablishmentWithGivenId = await _establishmentReadOnlyRepository
-            .ExistActiveWithId(request.EstablishmentId);
+
+        var existActiveEstablishmentWithGivenId =
+            await _establishmentReadOnlyRepository.ExistActiveWithId(request.EstablishmentId);
 
         if (existActiveEstablishmentWithGivenId is false)
-            validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure(
-                string.Empty,
-                "O estabelecimento informado não existe.")
+            validationResult.Errors.Add(
+                new FluentValidation.Results.ValidationFailure(
+                    string.Empty,
+                    "O estabelecimento informado não existe."
+                )
             );
 
-        if (validationResult.IsValid is false) {
-            var errorsMessages = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
+        if (validationResult.IsValid is false)
+        {
+            var errorsMessages = validationResult
+                .Errors.Select(error => error.ErrorMessage)
+                .ToList();
 
             throw new ErrorOnValidationException(errorsMessages);
         }

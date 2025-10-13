@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Product.GetAllByEstablishment;
 
-public interface IGetAllProductsByEstablishmentUseCase {
+public interface IGetAllProductsByEstablishmentUseCase
+{
     Task<ICollection<ResponseGetAllProductsByEstablishmentJson>> Execute(Guid establishmentId);
 }

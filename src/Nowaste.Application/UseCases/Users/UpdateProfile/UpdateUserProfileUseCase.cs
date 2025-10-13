@@ -8,22 +8,25 @@ using Nowaste.Exception.ExceptionBase;
 namespace Nowaste.Application.UseCases.Users.UpdateProfile;
 
 public class UpdateUserProfileUseCase(
-        IUnitOfWork unitOfWork,
-        ILoggedUser loggedUser,
-        IUserUpdateOnlyRepository userUpdateOnlyRepository,
-        IPersonReadOnlyRepository personReadOnlyRepository
-    ) : IUpdateUserProfileUseCase {
+    IUnitOfWork unitOfWork,
+    ILoggedUser loggedUser,
+    IUserUpdateOnlyRepository userUpdateOnlyRepository,
+    IPersonReadOnlyRepository personReadOnlyRepository
+) : IUpdateUserProfileUseCase
+{
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly ILoggedUser _loggedUser = loggedUser;
     private readonly IUserUpdateOnlyRepository _userUpdateOnlyRepository = userUpdateOnlyRepository;
     private readonly IPersonReadOnlyRepository _personReadOnlyRepository = personReadOnlyRepository;
 
-    public async Task Execute(RequestUpdateUserProfileJson request) {
+    public async Task Execute(RequestUpdateUserProfileJson request)
+    {
         await Validate(request);
 
         var authenticatedUser = await _loggedUser.Get();
 
-        var userEntity = await _userUpdateOnlyRepository.GetById(authenticatedUser.Id)
+        var userEntity =
+            await _userUpdateOnlyRepository.GetById(authenticatedUser.Id)
             ?? throw new NotFoundException("Usuário não encontrado.");
 
         userEntity.Role = request.Role;
@@ -40,18 +43,24 @@ public class UpdateUserProfileUseCase(
         await _unitOfWork.Commit();
     }
 
-    private async Task Validate(RequestUpdateUserProfileJson request) {
+    private async Task Validate(RequestUpdateUserProfileJson request)
+    {
         var result = new UpdateUserProfileValidator().Validate(request);
 
-        var phoneNumberExist = await _personReadOnlyRepository.ExistActiveUserWithPhoneNumber(request.PhoneNumber);
+        var phoneNumberExist = await _personReadOnlyRepository.ExistActiveUserWithPhoneNumber(
+            request.PhoneNumber
+        );
 
         if (phoneNumberExist)
-            result.Errors.Add(new FluentValidation.Results.ValidationFailure(
-                string.Empty,
-                "Já existe um usuário cadastrado com este número de celular.")
+            result.Errors.Add(
+                new FluentValidation.Results.ValidationFailure(
+                    string.Empty,
+                    "Já existe um usuário cadastrado com este número de celular."
+                )
             );
 
-        if (result.IsValid is false) {
+        if (result.IsValid is false)
+        {
             var errorsMessages = result.Errors.Select(f => f.ErrorMessage).ToList();
 
             throw new ErrorOnValidationException(errorsMessages);

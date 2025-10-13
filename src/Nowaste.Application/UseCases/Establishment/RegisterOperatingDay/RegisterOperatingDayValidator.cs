@@ -3,14 +3,16 @@ using Nowaste.Communication.Requests.Establishment;
 
 namespace Nowaste.Application.UseCases.Establishment.RegisterOperatingDay;
 
-public class RegisterOperatingDayValidator : AbstractValidator<RequestRegisterOperatingDayJson> {
-    public RegisterOperatingDayValidator() {
+public class RegisterOperatingDayValidator : AbstractValidator<RequestRegisterOperatingDayJson>
+{
+    public RegisterOperatingDayValidator()
+    {
         RuleFor(operatingDay => operatingDay.DayOfWeek)
             .NotEmpty()
             .WithMessage("O dia da semana é obrigatório.")
             .IsInEnum()
             .WithMessage("Dia da semana inválido.");
-        
+
         RuleFor(operatingDay => operatingDay.OpeningTime)
             .NotEmpty()
             .WithMessage("O horário de abertura é obrigatório.")
