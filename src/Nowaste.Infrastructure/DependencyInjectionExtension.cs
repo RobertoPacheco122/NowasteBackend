@@ -24,8 +24,13 @@ using Nowaste.Infrastructure.Services.LoggedUser;
 
 namespace Nowaste.Infrastructure;
 
-public static class DependencyInjectionExtension {
-    public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration) {
+public static class DependencyInjectionExtension
+{
+    public static void AddInfrastructure(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
+    {
         AddRepositories(services);
         AddToken(services, configuration);
 
@@ -36,14 +41,19 @@ public static class DependencyInjectionExtension {
             AddDbContext(services, configuration);
     }
 
-    private static void AddToken(IServiceCollection services, IConfiguration configuration) {
+    private static void AddToken(IServiceCollection services, IConfiguration configuration)
+    {
         var expiratioinTimeInMinutes = configuration.GetValue<uint>("Settings:Jwt:ExpiresMinutes");
         var siginKey = configuration.GetValue<string>("Settings:Jwt:SigningKey");
 
-        services.AddScoped<IAccessTokenGenerator>(config => new JwtTokenGenerator(expiratioinTimeInMinutes, siginKey!));
+        services.AddScoped<IAccessTokenGenerator>(config => new JwtTokenGenerator(
+            expiratioinTimeInMinutes,
+            siginKey!
+        ));
     }
 
-    private static void AddRepositories(IServiceCollection services) {
+    private static void AddRepositories(IServiceCollection services)
+    {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<IUserWriteOnlyRepository, UserWriteOnlyRepository>();
@@ -69,7 +79,8 @@ public static class DependencyInjectionExtension {
         services.AddScoped<IOrderReadOnlyRepository, OrderReadOnlyRepository>();
     }
 
-    private static void AddDbContext (IServiceCollection services, IConfiguration configuration) {
+    private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
+    {
         var connectionString = configuration.GetConnectionString("Connection");
 
         services.AddDbContext<NowasteDbContext>(config => config.UseNpgsql(connectionString));
