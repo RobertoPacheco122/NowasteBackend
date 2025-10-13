@@ -7,6 +7,7 @@ using Nowaste.Domain.Repositories.Establishment;
 using Nowaste.Domain.Repositories.Order;
 using Nowaste.Domain.Repositories.Person;
 using Nowaste.Domain.Repositories.Product;
+using Nowaste.Domain.Repositories.Review;
 using Nowaste.Domain.Repositories.User;
 using Nowaste.Domain.Security.Cryptography;
 using Nowaste.Domain.Security.Tokens;
@@ -17,6 +18,7 @@ using Nowaste.Infrastructure.DataAccess.Repositories.Establishment;
 using Nowaste.Infrastructure.DataAccess.Repositories.Order;
 using Nowaste.Infrastructure.DataAccess.Repositories.Person;
 using Nowaste.Infrastructure.DataAccess.Repositories.Product;
+using Nowaste.Infrastructure.DataAccess.Repositories.Review;
 using Nowaste.Infrastructure.DataAccess.Repositories.User;
 using Nowaste.Infrastructure.Extensions;
 using Nowaste.Infrastructure.Security.Tokens;
@@ -77,6 +79,10 @@ public static class DependencyInjectionExtension
 
         services.AddScoped<IOrderWriteOnlyRepository, OrderWriteOnlyRepository>();
         services.AddScoped<IOrderReadOnlyRepository, OrderReadOnlyRepository>();
+
+        services.AddScoped<IReviewWriteOnlyRepository, ReviewWriteOnlyRepository>();
+        services.AddScoped<IReviewReadOnlyRepository, ReviewReadOnlyRepository>();
+        services.AddScoped<IReviewUpdateOnlyRepository, ReviewUpdateOnlyRepository>();
     }
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)

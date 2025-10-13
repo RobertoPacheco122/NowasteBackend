@@ -3,6 +3,7 @@ using Nowaste.Communication.Requests.Address;
 using Nowaste.Communication.Requests.Establishment;
 using Nowaste.Communication.Requests.Order;
 using Nowaste.Communication.Requests.Product;
+using Nowaste.Communication.Requests.Review;
 using Nowaste.Communication.Requests.Users;
 using Nowaste.Communication.Responses.Address;
 using Nowaste.Communication.Responses.Establishment;
@@ -39,6 +40,8 @@ public class AutoMapping : Profile
 
         CreateMap<RequestRegisterOrderJson, OrderEntity>();
         CreateMap<RequestRegisterOrderItemJson, OrderItemEntity>();
+
+        CreateMap<RequestRegisterReviewJson, ReviewEntity>();
     }
 
     private void RequestToRequest() { }

@@ -27,6 +27,8 @@ using Nowaste.Application.UseCases.Product.RegisterCategory;
 using Nowaste.Application.UseCases.Product.ToggleIsActive;
 using Nowaste.Application.UseCases.Product.Update;
 using Nowaste.Application.UseCases.Product.UpdatePrice;
+using Nowaste.Application.UseCases.Review.Register;
+using Nowaste.Application.UseCases.Review.RegisterEstablishmentResponse;
 using Nowaste.Application.UseCases.Users.ChangePassword;
 using Nowaste.Application.UseCases.Users.Register;
 using Nowaste.Application.UseCases.Users.UpdateProfile;
@@ -101,5 +103,11 @@ public static class DependencyInjectionExtension
 
         services.AddScoped<IRegisterOrderUseCase, RegisterOrderUseCase>();
         services.AddScoped<IGetOrderByIdUseCase, GetOrderByIdUseCase>();
+
+        services.AddScoped<IRegisterReviewUseCase, RegisterReviewUseCase>();
+        services.AddScoped<
+            IRegisterEstablishmentReviewResponseUseCase,
+            RegisterEstablishmentReviewResponseUseCase
+        >();
     }
 }

@@ -10,6 +10,6 @@ public class ReviewEntity : BaseEntity
 
     public Guid PersonId { get; set; }
     public required PersonEntity Person { get; set; }
-    public Guid EstablishmentId { get; set; }
-    public required EstablishmentEntity Establishment { get; set; }
+    public required Guid OrderId { get; set; }
+    public OrderEntity Order { get; set; } = null!;
 }
