@@ -14,10 +14,11 @@ using Nowaste.Communication.Responses.Product;
 using Nowaste.Domain.Enums;
 
 namespace Nowaste.Api.Controllers;
+
 [Route("api/[controller]")]
 [ApiController]
-
-public class ProductController : ControllerBase {
+public class ProductController : ControllerBase
+{
     [HttpPost]
     [ProducesResponseType(typeof(ResponseRegisteredProductJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
@@ -27,7 +28,8 @@ public class ProductController : ControllerBase {
     public async Task<IActionResult> Register(
         [FromServices] IRegisterProductUseCase useCase,
         [FromBody] RequestRegisterProductJson request
-    ) {
+    )
+    {
         var response = await useCase.Execute(request);
 
         return Created(string.Empty, response);
@@ -42,7 +44,8 @@ public class ProductController : ControllerBase {
     public async Task<IActionResult> RegisterProductCategory(
         [FromServices] IRegisterProductCategoryUseCase useCase,
         [FromBody] RequestRegisterProductCategoryJson request
-    ) {
+    )
+    {
         var response = await useCase.Execute(request);
 
         return Created(string.Empty, response);
@@ -52,32 +55,41 @@ public class ProductController : ControllerBase {
     [ProducesResponseType(typeof(ResponseGetProductByIdJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetProductById(
-       [FromServices] IGetProductByIdUseCase useCase,
-       Guid id
-    ) {
+        [FromServices] IGetProductByIdUseCase useCase,
+        Guid id
+    )
+    {
         var response = await useCase.Execute(id);
 
         return Ok(response);
     }
 
     [HttpGet("category")]
-    [ProducesResponseType(typeof(ICollection<ResponseGetAllProductCategoriesJson>), StatusCodes.Status200OK)]
+    [ProducesResponseType(
+        typeof(ICollection<ResponseGetAllProductCategoriesJson>),
+        StatusCodes.Status200OK
+    )]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllProductCategories(
-       [FromServices] IGetAllProductCategoriesUseCase useCase
-    ) {
+        [FromServices] IGetAllProductCategoriesUseCase useCase
+    )
+    {
         var response = await useCase.Execute();
 
         return Ok(response);
     }
 
     [HttpGet("get-all-by-establishment/{id}")]
-    [ProducesResponseType(typeof(ICollection<ResponseGetAllProductsByEstablishmentJson>), StatusCodes.Status200OK)]
+    [ProducesResponseType(
+        typeof(ICollection<ResponseGetAllProductsByEstablishmentJson>),
+        StatusCodes.Status200OK
+    )]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllProductsByEstablishment(
-       [FromServices] IGetAllProductsByEstablishmentUseCase useCase,
-       Guid id
-    ) {
+        [FromServices] IGetAllProductsByEstablishmentUseCase useCase,
+        Guid id
+    )
+    {
         var response = await useCase.Execute(id);
 
         return Ok(response);
@@ -90,7 +102,8 @@ public class ProductController : ControllerBase {
     public async Task<IActionResult> ToggleIsActive(
         [FromServices] IToggleIsProductActiveUseCase useCase,
         Guid id
-    ) {
+    )
+    {
         await useCase.Execute(id);
 
         return NoContent();
@@ -105,7 +118,8 @@ public class ProductController : ControllerBase {
         [FromServices] IUpdateProductUseCase useCase,
         [FromBody] RequestUpdateProductJson request,
         Guid id
-    ) {
+    )
+    {
         await useCase.Execute(id, request);
 
         return NoContent();
@@ -120,7 +134,8 @@ public class ProductController : ControllerBase {
         [FromServices] IUpdateProductPriceUseCase useCase,
         [FromBody] RequestUpdateProductPriceJson request,
         Guid id
-    ) {
+    )
+    {
         await useCase.Execute(id, request);
 
         return NoContent();

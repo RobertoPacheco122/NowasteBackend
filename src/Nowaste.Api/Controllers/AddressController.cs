@@ -15,10 +15,12 @@ using Nowaste.Communication.Responses.Address;
 using Nowaste.Communication.Responses.Establishment;
 
 namespace Nowaste.Api.Controllers;
+
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class AddressController : ControllerBase {
+public class AddressController : ControllerBase
+{
     [HttpPost]
     [ProducesResponseType(typeof(ResponseRegisteredAddressJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
@@ -26,7 +28,8 @@ public class AddressController : ControllerBase {
     public async Task<IActionResult> Register(
         [FromServices] IRegisterAddressUseCase useCase,
         [FromBody] RequestRegisterAddressJson request
-    ) {
+    )
+    {
         var response = await useCase.Execute(request);
 
         return Created(string.Empty, response);
@@ -39,46 +42,59 @@ public class AddressController : ControllerBase {
     public async Task<IActionResult> GetById(
         [FromServices] IGetAddressByIdUseCase useCase,
         [FromRoute] Guid id
-    ) {
+    )
+    {
         var response = await useCase.Execute(id);
 
         return Ok(response);
     }
 
     [HttpGet("get-all-by-establishment/{id}")]
-    [ProducesResponseType(typeof(ICollection<ResponseGetAllAddressesJson>), StatusCodes.Status200OK)]
+    [ProducesResponseType(
+        typeof(ICollection<ResponseGetAllAddressesJson>),
+        StatusCodes.Status200OK
+    )]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllByEstablishment(
         [FromServices] IGetAllAddressesByEstablishmentUseCase useCase,
         [FromRoute] Guid id
-    ) {
+    )
+    {
         var response = await useCase.Execute(id);
 
         return Ok(response);
     }
 
     [HttpGet("get-all-by-institution/{id}")]
-    [ProducesResponseType(typeof(ICollection<ResponseGetAllAddressesJson>), StatusCodes.Status200OK)]
+    [ProducesResponseType(
+        typeof(ICollection<ResponseGetAllAddressesJson>),
+        StatusCodes.Status200OK
+    )]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllByInstitution(
         [FromServices] IGetAllAddressesByInstitutionUseCase useCase,
         [FromRoute] Guid id
-    ) {
+    )
+    {
         var response = await useCase.Execute(id);
 
         return Ok(response);
     }
 
     [HttpGet("get-all-by-person/{id}")]
-    [ProducesResponseType(typeof(ICollection<ResponseGetAllAddressesJson>), StatusCodes.Status200OK)]
+    [ProducesResponseType(
+        typeof(ICollection<ResponseGetAllAddressesJson>),
+        StatusCodes.Status200OK
+    )]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllByPerson(
         [FromServices] IGetAllAddressesByPersonUseCase useCase,
         [FromRoute] Guid id
-    ) {
+    )
+    {
         var response = await useCase.Execute(id);
 
         return Ok(response);
@@ -93,7 +109,8 @@ public class AddressController : ControllerBase {
         [FromServices] IUpdateAddressByEstablishmentUseCase useCase,
         [FromBody] RequestRegisterAddressJson request,
         [FromRoute] Guid id
-    ) {
+    )
+    {
         await useCase.Execute(id, request);
 
         return NoContent();
@@ -108,7 +125,8 @@ public class AddressController : ControllerBase {
         [FromServices] IUpdateAddressByInstitutionUseCase useCase,
         [FromBody] RequestRegisterAddressJson request,
         [FromRoute] Guid id
-    ) {
+    )
+    {
         await useCase.Execute(id, request);
 
         return NoContent();
@@ -123,7 +141,8 @@ public class AddressController : ControllerBase {
         [FromServices] IUpdateAddressByPersonUseCase useCase,
         [FromBody] RequestRegisterAddressJson request,
         [FromRoute] Guid id
-    ) {
+    )
+    {
         await useCase.Execute(id, request);
 
         return NoContent();
@@ -136,7 +155,8 @@ public class AddressController : ControllerBase {
     public async Task<IActionResult> Delete(
         [FromServices] IDeleteAddressUseCase useCase,
         [FromRoute] Guid id
-    ) {
+    )
+    {
         await useCase.Execute(id);
 
         return NoContent();
