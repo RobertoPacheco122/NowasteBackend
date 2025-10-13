@@ -2,7 +2,8 @@
 
 namespace Nowaste.Communication.Responses.Order;
 
-public class ResponseRegisteredOrderJson {
+public class ResponseRegisteredOrderJson
+{
     public Guid OrderId { get; set; }
     public EOrderStatus OrderStatus { get; set; }
 }

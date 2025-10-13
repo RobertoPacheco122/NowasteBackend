@@ -2,7 +2,8 @@
 
 namespace Nowaste.Communication.Requests.Address;
 
-public class RequestRegisterAddressJson {
+public class RequestRegisterAddressJson
+{
     public string StreetName { get; set; } = string.Empty;
     public string Number { get; set; } = string.Empty;
     public string Complement { get; set; } = string.Empty;

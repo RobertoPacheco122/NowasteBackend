@@ -2,7 +2,8 @@
 
 namespace Nowaste.Communication.Responses.Order;
 
-public class ResponseGetOrderItemByIdJson {
+public class ResponseGetOrderItemByIdJson
+{
     public string ProductName { get; set; } = string.Empty;
     public int UnitPrice { get; set; }
     public int ItemQuantity { get; set; }

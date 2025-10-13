@@ -4,7 +4,8 @@ using Nowaste.Communication.Responses.Users;
 
 namespace Nowaste.Communication.Responses.Order;
 
-public class ResponseGetOrderByIdJson {
+public class ResponseGetOrderByIdJson
+{
     public required string FriendlyId { get; set; } = string.Empty;
     public required DateTime OrderDate { get; set; }
     public EOrderStatus OrderStatus { get; set; }

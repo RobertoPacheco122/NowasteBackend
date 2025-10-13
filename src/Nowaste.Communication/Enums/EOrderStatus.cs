@@ -1,5 +1,7 @@
 ﻿namespace Nowaste.Communication.Enums;
-public enum EOrderStatus {
+
+public enum EOrderStatus
+{
     Pending = 1,
     Confirmed = 2,
     Preparing = 3,

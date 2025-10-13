@@ -2,7 +2,8 @@
 
 namespace Nowaste.Communication.Requests.Establishment;
 
-public class RequestRegisterEstablishmentJson {
+public class RequestRegisterEstablishmentJson
+{
     public string Cnpj { get; set; } = string.Empty;
     public string LegalName { get; set; } = string.Empty;
     public string TradeName { get; set; } = string.Empty;

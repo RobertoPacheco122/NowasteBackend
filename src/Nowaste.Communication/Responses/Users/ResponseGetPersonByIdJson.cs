@@ -1,6 +1,7 @@
 ﻿namespace Nowaste.Communication.Responses.Users;
 
-public class ResponseGetPersonByIdJson {
+public class ResponseGetPersonByIdJson
+{
     public string FullName { get; set; } = string.Empty;
     public string Cpf { get; set; } = string.Empty;
     public DateOnly BirthDate { get; set; }

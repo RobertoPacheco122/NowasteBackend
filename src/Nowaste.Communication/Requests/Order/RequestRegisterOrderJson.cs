@@ -2,7 +2,8 @@
 
 namespace Nowaste.Communication.Requests.Order;
 
-public class RequestRegisterOrderJson {
+public class RequestRegisterOrderJson
+{
     public Guid AddressId { get; set; }
     public Guid EstablishmentId { get; set; }
     public ICollection<RequestRegisterOrderItemJson> Items { get; set; } = [];
