@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Address.GetAllByInstitution;
 
-public interface IGetAllAddressesByInstitutionUseCase {
+public interface IGetAllAddressesByInstitutionUseCase
+{
     Task<ICollection<ResponseGetAllAddressesJson>> Execute(Guid institutionId);
 }

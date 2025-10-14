@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Establishment.UpdateOperatingDay;
 
-public interface IUpdateOperatingDayUseCase {
+public interface IUpdateOperatingDayUseCase
+{
     Task Execute(Guid operatingDayId, RequestUpdateOperatingDayJson request);
 }

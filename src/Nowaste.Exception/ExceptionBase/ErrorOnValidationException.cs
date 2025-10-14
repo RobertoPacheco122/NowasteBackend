@@ -8,7 +8,8 @@ public class ErrorOnValidationException(List<string> errorMessages) : NowasteExc
 
     public override int StatusCode => (int)HttpStatusCode.BadRequest;
 
-    public override List<string> GetErrors() {
+    public override List<string> GetErrors()
+    {
         return _errors;
     }
 }

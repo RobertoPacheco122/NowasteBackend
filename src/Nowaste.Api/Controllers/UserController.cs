@@ -11,14 +11,16 @@ namespace Nowaste.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UserController : ControllerBase {
+public class UserController : ControllerBase
+{
     [HttpPost]
     [ProducesResponseType(typeof(ResponseRegisteredUserJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register(
         [FromServices] IRegisterUserUseCase useCase,
         [FromBody] RequestRegisterUserJson request
-    ) {
+    )
+    {
         var response = await useCase.Execute(request);
 
         return Created(string.Empty, response);
@@ -32,7 +34,8 @@ public class UserController : ControllerBase {
     public async Task<IActionResult> UpdateProfile(
         [FromServices] IUpdateUserProfileUseCase useCase,
         [FromBody] RequestUpdateUserProfileJson request
-    ) {
+    )
+    {
         await useCase.Execute(request);
 
         return NoContent();
@@ -46,7 +49,8 @@ public class UserController : ControllerBase {
     public async Task<IActionResult> ChangePassword(
         [FromServices] IChangePasswordUseCase useCase,
         [FromBody] RequestChangePasswordJson request
-    ) {
+    )
+    {
         await useCase.Execute(request);
 
         return NoContent();

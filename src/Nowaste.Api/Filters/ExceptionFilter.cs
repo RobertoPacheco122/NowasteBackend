@@ -4,25 +4,37 @@ using Nowaste.Communication.Responses;
 using Nowaste.Exception.ExceptionBase;
 
 namespace Nowaste.Api.Filters;
-public class ExceptionFilter : IExceptionFilter {
-    public void OnException(ExceptionContext context) {
-        if(context.Exception is NowasteException) {
+
+public class ExceptionFilter : IExceptionFilter
+{
+    public void OnException(ExceptionContext context)
+    {
+        if (context.Exception is NowasteException)
+        {
             HandleProjectException(context);
-        } else {
+        }
+        else
+        {
             ThrowUnknowError(context);
         }
     }
 
-    private static void HandleProjectException(ExceptionContext context) {
+    private static void HandleProjectException(ExceptionContext context)
+    {
         var nowasteException = (NowasteException)context.Exception;
         var errorResponse = new ResponseErrorJson(nowasteException.GetErrors());
+
+        Console.WriteLine(context.Exception.Message);
 
         context.HttpContext.Response.StatusCode = nowasteException.StatusCode;
         context.Result = new ObjectResult(errorResponse);
     }
 
-    private static void ThrowUnknowError(ExceptionContext context) {
+    private static void ThrowUnknowError(ExceptionContext context)
+    {
         var errorResponse = new ResponseErrorJson("Unknown error");
+
+        Console.WriteLine(context.Exception.Message);
 
         context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
         context.Result = new ObjectResult(errorResponse);

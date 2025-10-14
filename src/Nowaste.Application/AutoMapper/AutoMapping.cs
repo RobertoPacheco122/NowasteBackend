@@ -1,29 +1,36 @@
 ﻿using AutoMapper;
 using Nowaste.Communication.Requests.Address;
 using Nowaste.Communication.Requests.Establishment;
+using Nowaste.Communication.Requests.Order;
 using Nowaste.Communication.Requests.Product;
+using Nowaste.Communication.Requests.Review;
 using Nowaste.Communication.Requests.Users;
 using Nowaste.Communication.Responses.Address;
 using Nowaste.Communication.Responses.Establishment;
+using Nowaste.Communication.Responses.Order;
 using Nowaste.Communication.Responses.Product;
+using Nowaste.Communication.Responses.Users;
 using Nowaste.Domain.Entities;
 
 namespace Nowaste.Application.AutoMapper;
 
-public class AutoMapping : Profile {
-
-    public AutoMapping() {
+public class AutoMapping : Profile
+{
+    public AutoMapping()
+    {
         RequestToEntity();
         EntityToResponse();
         RequestToRequest();
     }
 
-    private void RequestToEntity() {
+    private void RequestToEntity()
+    {
         CreateMap<RequestRegisterUserJson, UserEntity>();
 
         CreateMap<RequestRegisterUserJson, PersonEntity>();
 
         CreateMap<RequestRegisterEstablishmentJson, EstablishmentEntity>();
+        CreateMap<RequestRegisterOperatingDayJson, OperatingDayEntity>();
 
         CreateMap<RequestRegisterAddressJson, AddressEntity>();
 
@@ -31,14 +38,16 @@ public class AutoMapping : Profile {
         CreateMap<RequestRegisterProductCategoryJson, ProductCategoryEntity>();
         CreateMap<RequestUpdateProductPriceJson, ProductPriceHistoryEntity>();
 
-        CreateMap<RequestRegisterOperatingDayJson, OperatingDayEntity>();
+        CreateMap<RequestRegisterOrderJson, OrderEntity>();
+        CreateMap<RequestRegisterOrderItemJson, OrderItemEntity>();
+
+        CreateMap<RequestRegisterReviewJson, ReviewEntity>();
     }
 
-    private void RequestToRequest() {
+    private void RequestToRequest() { }
 
-    }
-
-    private void EntityToResponse() {
+    private void EntityToResponse()
+    {
         CreateMap<AddressEntity, ResponseRegisteredAddressJson>();
         CreateMap<AddressEntity, ResponseGetAllAddressesJson>();
         CreateMap<AddressEntity, ResponseGetAddressByIdJson>();
@@ -54,6 +63,10 @@ public class AutoMapping : Profile {
         CreateMap<ProductCategoryEntity, ResponseGetProductCategoryByIdJson>();
 
         CreateMap<EstablishmentEntity, ResponseGetEstablishmentByIdJson>();
+
+        CreateMap<OrderEntity, ResponseGetOrderByIdJson>();
+        CreateMap<OrderItemEntity, ResponseGetOrderItemByIdJson>();
+
+        CreateMap<PersonEntity, ResponseGetPersonByIdJson>();
     }
 }
- 

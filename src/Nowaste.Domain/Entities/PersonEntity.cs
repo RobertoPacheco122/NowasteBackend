@@ -2,7 +2,8 @@
 
 namespace Nowaste.Domain.Entities;
 
-public class PersonEntity : BaseEntity {
+public class PersonEntity : BaseEntity
+{
     public required string FullName { get; set; }
     public required string Cpf { get; set; }
     public required DateOnly BirthDate { get; set; }

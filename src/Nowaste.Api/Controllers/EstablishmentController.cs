@@ -16,16 +16,21 @@ namespace Nowaste.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class EstablishmentController : ControllerBase {
+public class EstablishmentController : ControllerBase
+{
     [HttpPost]
-    [ProducesResponseType(typeof(ResponseRegisteredEstablishmentJson), StatusCodes.Status201Created)]
+    [ProducesResponseType(
+        typeof(ResponseRegisteredEstablishmentJson),
+        StatusCodes.Status201Created
+    )]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [Authorize]
     public async Task<IActionResult> Register(
         [FromServices] IRegisterEstablishmentUseCase useCase,
         [FromBody] RequestRegisterEstablishmentJson request
-    ) {
+    )
+    {
         var response = await useCase.Execute(request);
 
         return Created(string.Empty, response);
@@ -40,7 +45,8 @@ public class EstablishmentController : ControllerBase {
     public async Task<IActionResult> VinculateEmployee(
         [FromServices] IVinculateEmployeeToEstablishmentUseCase useCase,
         [FromBody] RequestVinculateEmployeeToEstablishmentJson request
-    ) {
+    )
+    {
         await useCase.Execute(request);
 
         return NoContent();
@@ -55,7 +61,8 @@ public class EstablishmentController : ControllerBase {
     public async Task<IActionResult> RegisterOperatingDay(
         [FromServices] IRegisterOperatingDayUseCase useCase,
         [FromBody] RequestRegisterOperatingDayJson request
-    ) {
+    )
+    {
         await useCase.Execute(request);
 
         return NoContent();
@@ -67,21 +74,26 @@ public class EstablishmentController : ControllerBase {
     public async Task<IActionResult> GetById(
         [FromServices] IGetEstablishmentByIdUseCase useCase,
         [FromRoute] Guid id
-    ) {
+    )
+    {
         var response = await useCase.Execute(id);
 
         return Ok(response);
     }
 
     [HttpGet("get-all-available-for-address/{id}")]
-    [ProducesResponseType(typeof(ICollection<ResponseGetAllAvailableEstablishmentForAddressJson>), StatusCodes.Status200OK)]
+    [ProducesResponseType(
+        typeof(ICollection<ResponseGetAllAvailableEstablishmentForAddressJson>),
+        StatusCodes.Status200OK
+    )]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     [Authorize]
     public async Task<IActionResult> GetAllAvailableForAddress(
-       [FromServices] IGetAvailableEstablishmentForAddressUseCase useCase,
-       [FromRoute] Guid id
-    ) {
+        [FromServices] IGetAvailableEstablishmentForAddressUseCase useCase,
+        [FromRoute] Guid id
+    )
+    {
         var response = await useCase.Execute(id);
 
         return Ok(response);
@@ -97,7 +109,8 @@ public class EstablishmentController : ControllerBase {
         [FromServices] IUpdateEstablishmentUseCase useCase,
         [FromBody] RequestUpdateEstablishmentJson request,
         [FromRoute] Guid id
-    ) {
+    )
+    {
         await useCase.Execute(id, request);
 
         return NoContent();
@@ -113,7 +126,8 @@ public class EstablishmentController : ControllerBase {
         [FromServices] IUpdateOperatingDayUseCase useCase,
         [FromBody] RequestUpdateOperatingDayJson request,
         [FromRoute] Guid id
-    ) {
+    )
+    {
         await useCase.Execute(id, request);
 
         return NoContent();

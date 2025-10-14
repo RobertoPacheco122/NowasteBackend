@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Nowaste.Domain.Entities;
 
-namespace Nowaste.Infrastructure.DataAccess; 
+namespace Nowaste.Infrastructure.DataAccess;
 
-public class NowasteDbContext(DbContextOptions options) : DbContext(options) {
+public class NowasteDbContext(DbContextOptions options) : DbContext(options)
+{
     public DbSet<AddressEntity> Addresses { get; set; }
     public DbSet<EstablishmentEntity> Establishments { get; set; }
     public DbSet<InstitutionEntity> Institutions { get; set; }

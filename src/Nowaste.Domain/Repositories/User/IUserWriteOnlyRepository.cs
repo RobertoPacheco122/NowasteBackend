@@ -2,6 +2,7 @@
 
 namespace Nowaste.Domain.Repositories.User;
 
-public interface IUserWriteOnlyRepository {
+public interface IUserWriteOnlyRepository
+{
     Task Add(UserEntity user);
 }

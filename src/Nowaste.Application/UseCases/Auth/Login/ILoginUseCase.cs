@@ -3,6 +3,7 @@ using Nowaste.Communication.Responses.Users;
 
 namespace Nowaste.Application.UseCases.Auth.Login;
 
-public interface ILoginUseCase {
+public interface ILoginUseCase
+{
     Task<ResponseRegisteredUserJson> Execute(RequestLoginJson request);
 }

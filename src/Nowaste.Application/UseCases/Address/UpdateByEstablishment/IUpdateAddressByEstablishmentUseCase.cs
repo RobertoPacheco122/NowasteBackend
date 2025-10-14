@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Address.UpdateByEstablishment;
 
-public interface IUpdateAddressByEstablishmentUseCase {
+public interface IUpdateAddressByEstablishmentUseCase
+{
     Task Execute(Guid addressId, RequestRegisterAddressJson request);
 }

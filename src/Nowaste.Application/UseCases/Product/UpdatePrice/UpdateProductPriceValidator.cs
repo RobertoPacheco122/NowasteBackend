@@ -3,8 +3,10 @@ using Nowaste.Communication.Requests.Product;
 
 namespace Nowaste.Application.UseCases.Product.UpdatePrice;
 
-public class UpdateProductPriceValidator : AbstractValidator<RequestUpdateProductPriceJson> {
-    public UpdateProductPriceValidator() {
+public class UpdateProductPriceValidator : AbstractValidator<RequestUpdateProductPriceJson>
+{
+    public UpdateProductPriceValidator()
+    {
         RuleFor(product => product.Price)
             .NotEmpty()
             .WithMessage("O preço do produto é obrigatório.")
@@ -20,7 +22,10 @@ public class UpdateProductPriceValidator : AbstractValidator<RequestUpdateProduc
         RuleFor(product => product.EffectiveDate)
             .NotEmpty()
             .WithMessage("A data de vigência do preço é obrigatória.")
-            .When(product => product.EffectiveDate < DateTime.UtcNow, ApplyConditionTo.CurrentValidator)
+            .When(
+                product => product.EffectiveDate < DateTime.UtcNow,
+                ApplyConditionTo.CurrentValidator
+            )
             .WithMessage("A data de vigência do preço não pode ser no passado.");
     }
 }

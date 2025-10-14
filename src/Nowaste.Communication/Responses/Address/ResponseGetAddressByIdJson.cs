@@ -2,7 +2,8 @@
 
 namespace Nowaste.Communication.Responses.Address;
 
-public class ResponseGetAddressByIdJson {
+public class ResponseGetAddressByIdJson
+{
     public Guid Id { get; set; }
     public string StreetName { get; set; } = string.Empty;
     public string Number { get; set; } = string.Empty;

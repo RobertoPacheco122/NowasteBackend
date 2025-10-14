@@ -3,8 +3,10 @@ using Nowaste.Communication.Requests.Establishment;
 
 namespace Nowaste.Application.UseCases.Establishment.UpdateOperatingDay;
 
-public class UpdateOperatingDayValidator : AbstractValidator<RequestUpdateOperatingDayJson> {
-    public UpdateOperatingDayValidator() {
+public class UpdateOperatingDayValidator : AbstractValidator<RequestUpdateOperatingDayJson>
+{
+    public UpdateOperatingDayValidator()
+    {
         RuleFor(operatingDay => operatingDay.OpeningTime)
             .NotEmpty()
             .WithMessage("O horário de abertura é obrigatório.")

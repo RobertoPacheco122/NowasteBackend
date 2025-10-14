@@ -1,6 +1,7 @@
 ﻿namespace Nowaste.Domain.Enums;
 
-public static class Roles {
+public static class Roles
+{
     public const string CUSTOMER = "customer";
 
     public const string ESTABLISHMENT_ADMIN = "establishmentAdmin";

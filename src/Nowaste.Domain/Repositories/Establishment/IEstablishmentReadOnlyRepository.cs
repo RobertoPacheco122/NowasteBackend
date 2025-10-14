@@ -2,7 +2,8 @@
 
 namespace Nowaste.Domain.Repositories.Establishment;
 
-public interface IEstablishmentReadOnlyRepository {
+public interface IEstablishmentReadOnlyRepository
+{
     Task<EstablishmentEntity?> GetById(Guid Id);
     Task<ICollection<EstablishmentEntity>> GetAllAvailableForAddress(Guid addressId);
     Task<OperatingDayEntity?> GetOperatingDayByDayOfWeek(Guid establishmentId, DayOfWeek dayOfWeek);

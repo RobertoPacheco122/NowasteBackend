@@ -1,6 +1,7 @@
 ﻿namespace Nowaste.Domain.Entities;
 
-public class InstitutionEntity : BaseEntity {
+public class InstitutionEntity : BaseEntity
+{
     public required string ExhibitionName { get; set; }
     public required string Email { get; set; }
     public required string Cnpj { get; set; }

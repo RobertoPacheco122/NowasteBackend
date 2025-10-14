@@ -1,5 +1,6 @@
 ﻿namespace Nowaste.Domain.Security.Tokens;
 
-public interface ITokenProvider {
+public interface ITokenProvider
+{
     string TokenOnRequest();
 }

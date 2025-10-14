@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Address.GetAllByPerson;
 
-public interface IGetAllAddressesByPersonUseCase {
+public interface IGetAllAddressesByPersonUseCase
+{
     Task<ICollection<ResponseGetAllAddressesJson>> Execute(Guid personId);
 }

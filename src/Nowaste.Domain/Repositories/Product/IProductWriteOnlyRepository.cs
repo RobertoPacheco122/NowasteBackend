@@ -2,7 +2,8 @@
 
 namespace Nowaste.Domain.Repositories.Product;
 
-public interface IProductWriteOnlyRepository {
+public interface IProductWriteOnlyRepository
+{
     Task AddProduct(ProductEntity product);
     Task AddProductCategory(ProductCategoryEntity productCategory);
     Task AddPrice(ProductPriceHistoryEntity priceHistory);

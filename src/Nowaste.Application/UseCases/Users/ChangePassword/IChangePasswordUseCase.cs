@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Users.ChangePassword;
 
-public interface IChangePasswordUseCase {
+public interface IChangePasswordUseCase
+{
     Task Execute(RequestChangePasswordJson request);
 }

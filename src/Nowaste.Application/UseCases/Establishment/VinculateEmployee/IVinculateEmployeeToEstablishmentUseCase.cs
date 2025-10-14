@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Establishment.VinculateEmployee;
 
-public interface IVinculateEmployeeToEstablishmentUseCase {
+public interface IVinculateEmployeeToEstablishmentUseCase
+{
     Task Execute(RequestVinculateEmployeeToEstablishmentJson request);
 }

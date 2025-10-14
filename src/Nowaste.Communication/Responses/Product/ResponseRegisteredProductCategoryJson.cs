@@ -1,6 +1,7 @@
 ﻿namespace Nowaste.Communication.Responses.Product;
 
-public class ResponseRegisteredProductCategoryJson {
+public class ResponseRegisteredProductCategoryJson
+{
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;

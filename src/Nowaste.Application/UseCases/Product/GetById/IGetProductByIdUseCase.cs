@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Product.GetById;
 
-public interface IGetProductByIdUseCase {
-    Task<ResponseGetProductByIdJson> Execute (Guid id);
+public interface IGetProductByIdUseCase
+{
+    Task<ResponseGetProductByIdJson> Execute(Guid id);
 }

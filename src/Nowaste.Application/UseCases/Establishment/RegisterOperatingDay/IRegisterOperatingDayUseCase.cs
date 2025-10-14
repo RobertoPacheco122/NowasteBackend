@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Establishment.RegisterOperatingDay;
 
-public interface IRegisterOperatingDayUseCase {
+public interface IRegisterOperatingDayUseCase
+{
     Task Execute(RequestRegisterOperatingDayJson request);
 }

@@ -9,15 +9,18 @@ using Nowaste.Exception.ExceptionBase;
 namespace Nowaste.Application.UseCases.Address.Register;
 
 public class RegisterAddressUseCase(
-        IUnitOfWork unitOfWork,
-        IMapper mapper,
-        IAddressWriteOnlyRepository addressWriteOnlyRepository
-    ) : IRegisterAddressUseCase {
+    IUnitOfWork unitOfWork,
+    IMapper mapper,
+    IAddressWriteOnlyRepository addressWriteOnlyRepository
+) : IRegisterAddressUseCase
+{
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
-    private readonly IAddressWriteOnlyRepository _addressWriteOnlyRepository = addressWriteOnlyRepository;
+    private readonly IAddressWriteOnlyRepository _addressWriteOnlyRepository =
+        addressWriteOnlyRepository;
 
-    public async Task<ResponseRegisteredAddressJson> Execute(RequestRegisterAddressJson request) {
+    public async Task<ResponseRegisteredAddressJson> Execute(RequestRegisterAddressJson request)
+    {
         Validate(request);
 
         var addressEntity = _mapper.Map<AddressEntity>(request);
@@ -27,16 +30,19 @@ public class RegisterAddressUseCase(
 
         await _unitOfWork.Commit();
 
-        return new ResponseRegisteredAddressJson {
+        return new ResponseRegisteredAddressJson
+        {
             Id = addressEntity.Id,
             StreetName = addressEntity.StreetName,
         };
     }
 
-    private static void Validate(RequestRegisterAddressJson request) {
+    private static void Validate(RequestRegisterAddressJson request)
+    {
         var validationResult = new RegisterAddressValidator().Validate(request);
 
-        if (validationResult.IsValid is false) {
+        if (validationResult.IsValid is false)
+        {
             var errorsMessages = validationResult.Errors.Select(f => f.ErrorMessage).ToList();
 
             throw new ErrorOnValidationException(errorsMessages);

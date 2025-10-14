@@ -3,11 +3,11 @@ using Nowaste.Communication.Requests.Product;
 
 namespace Nowaste.Application.UseCases.Product.Register;
 
-public class RegisterProductValidator : AbstractValidator<RequestRegisterProductJson> {
-    public RegisterProductValidator() {
-        RuleFor(product => product.Name)
-            .NotEmpty()
-            .WithMessage("O nome é obrigatório.");
+public class RegisterProductValidator : AbstractValidator<RequestRegisterProductJson>
+{
+    public RegisterProductValidator()
+    {
+        RuleFor(product => product.Name).NotEmpty().WithMessage("O nome é obrigatório.");
 
         RuleFor(product => product.ProductCategoryId)
             .NotEmpty()

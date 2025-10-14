@@ -3,6 +3,7 @@ using Nowaste.Communication.Responses.Product;
 
 namespace Nowaste.Application.UseCases.Product.RegisterCategory;
 
-public interface IRegisterProductCategoryUseCase {
+public interface IRegisterProductCategoryUseCase
+{
     Task<ResponseRegisteredProductCategoryJson> Execute(RequestRegisterProductCategoryJson request);
 }

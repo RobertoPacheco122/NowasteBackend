@@ -1,8 +1,9 @@
 ﻿namespace Nowaste.Communication.Enums;
 
-public enum EUserStatus {
+public enum EUserStatus
+{
     Active = 1,
     Inactive = 2,
     Banned = 3,
-    PendingVerification = 4
+    PendingVerification = 4,
 }

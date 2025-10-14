@@ -2,6 +2,7 @@
 
 namespace Nowaste.Domain.Security.Tokens;
 
-public interface IAccessTokenGenerator {
+public interface IAccessTokenGenerator
+{
     string Generate(UserEntity user);
 }

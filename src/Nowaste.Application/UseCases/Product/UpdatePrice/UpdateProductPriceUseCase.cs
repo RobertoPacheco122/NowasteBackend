@@ -12,19 +12,24 @@ public class UpdateProductPriceUseCase(
     IMapper mapper,
     IProductWriteOnlyRepository productWriteOnlyRepository,
     IProductReadOnlyRepository productReadOnlyRepository
-    ) : IUpdateProductPriceUseCase {
+) : IUpdateProductPriceUseCase
+{
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
-    private readonly IProductWriteOnlyRepository _productWriteOnlyRepository = productWriteOnlyRepository;
-    private readonly IProductReadOnlyRepository _productReadOnlyRepository = productReadOnlyRepository;
+    private readonly IProductWriteOnlyRepository _productWriteOnlyRepository =
+        productWriteOnlyRepository;
+    private readonly IProductReadOnlyRepository _productReadOnlyRepository =
+        productReadOnlyRepository;
 
-    public async Task Execute(Guid productId, RequestUpdateProductPriceJson request) {
+    public async Task Execute(Guid productId, RequestUpdateProductPriceJson request)
+    {
         Validate(request);
 
-        var existActiveProductWithGivenId = await _productReadOnlyRepository
-            .ExistActiveWithId(productId);
+        var existActiveProductWithGivenId = await _productReadOnlyRepository.ExistActiveWithId(
+            productId
+        );
 
-        if(existActiveProductWithGivenId is false)
+        if (existActiveProductWithGivenId is false)
             throw new NotFoundException("Produto não encontrado.");
 
         var productPriceHistoryEntity = _mapper.Map<ProductPriceHistoryEntity>(request);
@@ -36,11 +41,15 @@ public class UpdateProductPriceUseCase(
         await _unitOfWork.Commit();
     }
 
-    private static void Validate(RequestUpdateProductPriceJson request) {
+    private static void Validate(RequestUpdateProductPriceJson request)
+    {
         var validationResult = new UpdateProductPriceValidator().Validate(request);
 
-        if (validationResult.IsValid is false) {
-            var errorsMessages = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
+        if (validationResult.IsValid is false)
+        {
+            var errorsMessages = validationResult
+                .Errors.Select(error => error.ErrorMessage)
+                .ToList();
             throw new ErrorOnValidationException(errorsMessages);
         }
     }

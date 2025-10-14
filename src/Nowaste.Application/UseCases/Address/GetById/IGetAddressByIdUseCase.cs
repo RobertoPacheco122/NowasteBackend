@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Address.GetById;
 
-public interface IGetAddressByIdUseCase {
+public interface IGetAddressByIdUseCase
+{
     Task<ResponseGetAddressByIdJson> Execute(Guid addressId);
 }

@@ -1,6 +1,7 @@
 ﻿namespace Nowaste.Domain.Entities;
 
-public class ProductPriceHistoryEntity : BaseEntity {
+public class ProductPriceHistoryEntity : BaseEntity
+{
     public required int Price { get; set; }
     public required int SalePrice { get; set; }
     public bool ShowDiscountAsPercentage { get; set; } = true;

@@ -3,6 +3,7 @@ using Nowaste.Communication.Responses.Users;
 
 namespace Nowaste.Application.UseCases.Users.Register;
 
-public interface IRegisterUserUseCase {
+public interface IRegisterUserUseCase
+{
     Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson request);
 }

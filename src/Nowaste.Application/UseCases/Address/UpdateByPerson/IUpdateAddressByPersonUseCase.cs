@@ -2,6 +2,7 @@
 
 namespace Nowaste.Application.UseCases.Address.UpdateByPerson;
 
-public interface IUpdateAddressByPersonUseCase {
+public interface IUpdateAddressByPersonUseCase
+{
     Task Execute(Guid addressId, RequestRegisterAddressJson request);
 }

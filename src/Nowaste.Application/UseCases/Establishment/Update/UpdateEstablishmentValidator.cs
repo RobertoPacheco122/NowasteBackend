@@ -3,8 +3,10 @@ using Nowaste.Communication.Requests.Establishment;
 
 namespace Nowaste.Application.UseCases.Establishment.Update;
 
-public class UpdateEstablishmentValidator : AbstractValidator<RequestUpdateEstablishmentJson> {
-    public UpdateEstablishmentValidator() {
+public class UpdateEstablishmentValidator : AbstractValidator<RequestUpdateEstablishmentJson>
+{
+    public UpdateEstablishmentValidator()
+    {
         RuleFor(establishment => establishment.ExhibitionName)
             .NotEmpty()
             .WithMessage("O nome de exibição é obrigatório");
@@ -13,7 +15,10 @@ public class UpdateEstablishmentValidator : AbstractValidator<RequestUpdateEstab
             .NotEmpty()
             .WithMessage("O email é obrigatório.")
             .EmailAddress()
-            .When(establishment => string.IsNullOrWhiteSpace(establishment.Email) is false, ApplyConditionTo.CurrentValidator)
+            .When(
+                establishment => string.IsNullOrWhiteSpace(establishment.Email) is false,
+                ApplyConditionTo.CurrentValidator
+            )
             .WithMessage("O email não é válido.");
 
         RuleFor(establishment => establishment.Status)
