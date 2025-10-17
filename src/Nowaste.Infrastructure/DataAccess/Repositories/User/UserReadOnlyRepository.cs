@@ -8,6 +8,14 @@ internal class UserReadOnlyRepository(NowasteDbContext dbContext) : IUserReadOnl
 {
     private readonly NowasteDbContext _dbContext = dbContext;
 
+    public async Task<bool> ExistActiveUserWithCpf(string cpf)
+    {
+        return await _dbContext
+            .Users.AsNoTracking()
+            .Include(user => user.Person)
+            .AnyAsync(user => user.Person.Cpf.Equals(cpf));
+    }
+
     public async Task<bool> ExistActiveUserWithEmail(string email)
     {
         return await _dbContext

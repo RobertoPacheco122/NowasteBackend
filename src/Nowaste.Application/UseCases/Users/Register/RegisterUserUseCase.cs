@@ -40,7 +40,7 @@ public class RegisterUserUseCase(
         var userEntity = _mapper.Map<UserEntity>(request);
         userEntity.CreatedAt = DateTime.UtcNow;
         userEntity.PasswordHash = _passwordEncripter.Encrypt(request.Password);
-        userEntity.UserStatus = EUserStatus.PendingVerification;
+        userEntity.UserStatus = EUserStatus.Active;
 
         await _userWriteOnlyRepository.Add(userEntity);
 
@@ -66,25 +66,25 @@ public class RegisterUserUseCase(
         var result = new RegisterUserValidator().Validate(request);
 
         var emailExist = await _userReadOnlyRepository.ExistActiveUserWithEmail(request.Email);
+
+        if (emailExist)
+            throw new ErrorOnValidationException(
+                ["Já existe um usuário cadastrado com este email."]
+            );
+
         var phoneNumberExist = await _personReadOnlyRepository.ExistActiveUserWithPhoneNumber(
             request.PhoneNumber
         );
 
-        if (emailExist)
-            result.Errors.Add(
-                new FluentValidation.Results.ValidationFailure(
-                    string.Empty,
-                    "Já existe um usuário cadastrado com este email."
-                )
+        if (phoneNumberExist)
+            throw new ErrorOnValidationException(
+                ["Já existe um usuário cadastrado com este número de celular."]
             );
 
-        if (phoneNumberExist)
-            result.Errors.Add(
-                new FluentValidation.Results.ValidationFailure(
-                    string.Empty,
-                    "Já existe um usuário cadastrado com este número de celular."
-                )
-            );
+        var cpfExist = await _userReadOnlyRepository.ExistActiveUserWithCpf(request.Cpf);
+
+        if (cpfExist)
+            throw new ErrorOnValidationException(["Já existe um usuário cadastrado com este CPF."]);
 
         if (!result.IsValid)
         {
