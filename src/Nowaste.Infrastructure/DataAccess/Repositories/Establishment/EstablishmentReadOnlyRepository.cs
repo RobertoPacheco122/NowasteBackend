@@ -71,6 +71,7 @@ internal class EstablishmentReadOnlyRepository(NowasteDbContext dbContext)
 
         var establishments = await _dbContext
             .Establishments.AsNoTracking()
+            .Include(establishment => establishment.Reviews)
             .Include(establishment => establishment.OperatingDays)
             .Include(establishment => establishment.Products)
             .ThenInclude(product => product.ProductCategory)

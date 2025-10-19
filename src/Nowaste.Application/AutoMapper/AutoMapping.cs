@@ -63,6 +63,7 @@ public class AutoMapping : Profile
         CreateMap<ProductCategoryEntity, ResponseGetProductCategoryByIdJson>();
 
         CreateMap<EstablishmentEntity, ResponseGetEstablishmentByIdJson>();
+        CreateMap<EstablishmentEntity, ResponseAvailableEstablishmentJson>();
 
         CreateMap<OrderEntity, ResponseGetOrderByIdJson>();
         CreateMap<OrderItemEntity, ResponseGetOrderItemByIdJson>();

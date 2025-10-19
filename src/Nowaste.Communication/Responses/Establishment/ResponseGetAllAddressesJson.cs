@@ -4,6 +4,7 @@ namespace Nowaste.Communication.Responses.Establishment;
 
 public class ResponseGetAllAddressesJson
 {
+    public Guid Id { get; set; }
     public required string StreetName { get; set; }
     public required string Number { get; set; }
     public string Complement { get; set; } = string.Empty;

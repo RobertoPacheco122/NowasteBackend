@@ -24,12 +24,9 @@ public class GetAllAvailableEstablishmentForAddressUseCase(
         Guid addressId
     )
     {
-        var existActiveAddressWithId = await _addressReadOnlyRepository.ExistActiveWithId(
-            addressId
-        );
-
-        if (existActiveAddressWithId is false)
-            throw new NotFoundException("Endereço não encontrado.");
+        var addressEntity =
+            await _addressReadOnlyRepository.GetById(addressId)
+            ?? throw new NotFoundException("Endereço não encontrado.");
 
         var establishmentsEntities =
             await _establishmentReadOnlyRepository.GetAllAvailableForAddress(addressId);
@@ -80,12 +77,63 @@ public class GetAllAvailableEstablishmentForAddressUseCase(
                     );
                 }
 
+                var operationalAddress = establishment.Addresses.First(address =>
+                    address.AddressType == Domain.Enums.EAddressType.Operational
+                );
+
+                var distanceFromAddressToEstablishmentInMeters = CalculateDistanceInMeters(
+                    operationalAddress.Longitude,
+                    operationalAddress.Latitude,
+                    addressEntity.Longitude,
+                    addressEntity.Latitude
+                );
+
+                var averageRating = establishment.Reviews.Count is 0
+                    ? 0.0
+                    : establishment.Reviews.Average(review => review.Rating);
+
+                var formattedEstablishment = _mapper.Map<ResponseAvailableEstablishmentJson>(
+                    establishment
+                );
+                formattedEstablishment.AverageRating = averageRating;
+                formattedEstablishment.DistanceInMetersFromAddressToEstablishment =
+                    distanceFromAddressToEstablishmentInMeters;
+
                 return new ResponseGetAllAvailableEstablishmentForAddressJson
                 {
-                    Establishment = _mapper.Map<ResponseGetEstablishmentByIdJson>(establishment),
+                    Establishment = formattedEstablishment,
                     Products = formattedProducts,
                 };
             }),
         ];
     }
+
+    private static double CalculateDistanceInMeters(
+        double lon1,
+        double lat1,
+        double lon2,
+        double lat2
+    )
+    {
+        const double R = 6371000;
+
+        var latRad1 = ToRadians(lat1);
+        var latRad2 = ToRadians(lat2);
+        var deltaLat = ToRadians(lat2 - lat1);
+        var deltaLon = ToRadians(lon2 - lon1);
+
+        var a =
+            Math.Sin(deltaLat / 2) * Math.Sin(deltaLat / 2)
+            + Math.Cos(latRad1)
+                * Math.Cos(latRad2)
+                * Math.Sin(deltaLon / 2)
+                * Math.Sin(deltaLon / 2);
+        var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+        var distance = R * c;
+
+        return distance;
+    }
+
+    private static double ToRadians(double degrees) => degrees * (Math.PI / 180.0);
 }

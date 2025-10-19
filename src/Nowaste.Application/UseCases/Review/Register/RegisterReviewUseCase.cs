@@ -33,11 +33,16 @@ public class RegisterReviewUseCase(
         var loggedUserEntity =
             await _loggedUser.Get() ?? throw new NotFoundException("Usuário não encontrado.");
 
-        await Validate(request, loggedUserEntity);
+        var orderEntity =
+            await _orderReadOnlyRepository.GetById(request.OrderId)
+            ?? throw new NotFoundException("Pedido a ser avaliado não encontrado.");
+
+        await Validate(request, loggedUserEntity, orderEntity);
 
         var reviewEntity = _mapper.Map<ReviewEntity>(request);
         reviewEntity.CreatedAt = DateTime.UtcNow;
         reviewEntity.PersonId = loggedUserEntity.Person.Id;
+        reviewEntity.EstablishmentId = orderEntity.EstablishmentId;
         reviewEntity.ReviewDate = DateTime.UtcNow;
 
         await _reviewWriteOnlyRepository.Add(reviewEntity);
@@ -51,18 +56,18 @@ public class RegisterReviewUseCase(
         };
     }
 
-    public async Task Validate(RequestRegisterReviewJson request, UserEntity loggedUser)
+    public async Task Validate(
+        RequestRegisterReviewJson request,
+        UserEntity loggedUser,
+        OrderEntity order
+    )
     {
         var validationResult = new RegisterReviewValidator().Validate(request);
 
-        var orderEntity =
-            await _orderReadOnlyRepository.GetById(request.OrderId)
-            ?? throw new NotFoundException("Pedido a ser avaliado não encontrado.");
-
-        if (orderEntity.PersonId != loggedUser.Person.Id)
+        if (order.PersonId != loggedUser.Person.Id)
             throw new ForbiddenException("O pedido a ser avaliado não pertence ao usuário.");
 
-        if (orderEntity.OrderStatus is not EOrderStatus.Delivered)
+        if (order.OrderStatus is not EOrderStatus.Delivered)
             validationResult.Errors.Add(
                 new FluentValidation.Results.ValidationFailure(
                     string.Empty,
