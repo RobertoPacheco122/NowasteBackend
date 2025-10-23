@@ -4,6 +4,7 @@ namespace Nowaste.Communication.Responses.Establishment;
 
 public class ResponseGetEstablishmentByIdJson
 {
+    public Guid Id { get; set; }
     public string Cnpj { get; set; } = string.Empty;
     public string LegalName { get; set; } = string.Empty;
     public string TradeName { get; set; } = string.Empty;
