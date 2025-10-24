@@ -28,8 +28,13 @@ public class GetProductByIdUseCase(
             actualPriceHistory
         );
 
+        var establishmentAverageRating = productEntity.Establishment.Reviews.Average(review =>
+            review.Rating
+        );
+
         var result = _mapper.Map<ResponseGetProductByIdJson>(productEntity);
         result.ActualPriceHistory = formattedActualPriceHistory;
+        result.Establishment.AverageRating = establishmentAverageRating;
 
         return result;
     }

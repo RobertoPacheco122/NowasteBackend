@@ -13,5 +13,6 @@ public class ResponseGetEstablishmentByIdJson
     public string Telephone { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
     public double? ServiceRadiusInMeters { get; set; }
+    public double AverageRating { get; set; }
     public EEstablishmentStatus Status { get; set; }
 }
