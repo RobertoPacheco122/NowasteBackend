@@ -14,4 +14,5 @@ public class RequestRegisterEstablishmentJson
     public double? ServiceRadiusInMeters { get; set; }
     public int DeliveryFeeInCents { get; set; }
     public RequestRegisterAddressJson? OperationAddress { get; set; }
+    public string Description { get; set; } = string.Empty;
 }

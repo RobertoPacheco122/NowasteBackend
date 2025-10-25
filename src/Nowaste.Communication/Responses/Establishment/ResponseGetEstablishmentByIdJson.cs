@@ -19,4 +19,5 @@ public class ResponseGetEstablishmentByIdJson
     public double AverageRating { get; set; }
     public ResponseGetAddressByIdJson OperationalAddress { get; set; } = new();
     public EEstablishmentStatus Status { get; set; }
+    public string Description { get; set; } = string.Empty;
 }

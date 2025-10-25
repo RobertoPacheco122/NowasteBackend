@@ -14,6 +14,7 @@ public class EstablishmentEntity : BaseEntity
     public double ServiceRadiusInMeters { get; set; } = 1000;
     public EEstablishmentStatus Status { get; set; } = EEstablishmentStatus.AwaitingApproval;
     public int DeliveryFeeInCents { get; set; } = 0;
+    public string Description { get; set; } = string.Empty;
 
     public virtual ICollection<AddressEntity> Addresses { get; set; } = [];
     public virtual ICollection<PersonEntity> Persons { get; set; } = [];
