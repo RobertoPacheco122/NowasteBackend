@@ -53,6 +53,8 @@ internal class ProductReadOnlyRepository(NowasteDbContext dbContext) : IProductR
             .Include(product => product.ProductCategory)
             .Include(product => product.Establishment)
             .ThenInclude(establishment => establishment.Reviews)
+            .Include(Product => Product.Establishment)
+            .ThenInclude(establishment => establishment.Addresses)
             .FirstOrDefaultAsync(product => product.Id == id);
     }
 }
