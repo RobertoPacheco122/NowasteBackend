@@ -4,6 +4,7 @@ namespace Nowaste.Communication.Responses.Product;
 
 public class ResponseGetAllProductsByEstablishmentJson
 {
+    public Guid Id { get; set; }
     public required string Name { get; set; }
     public string Description { get; set; } = string.Empty;
     public decimal? QuantityInStock { get; set; }

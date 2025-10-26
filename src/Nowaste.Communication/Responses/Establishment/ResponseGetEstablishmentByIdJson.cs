@@ -20,4 +20,5 @@ public class ResponseGetEstablishmentByIdJson
     public ResponseGetAddressByIdJson OperationalAddress { get; set; } = new();
     public EEstablishmentStatus Status { get; set; }
     public string Description { get; set; } = string.Empty;
+    public int DeliveryFeeInCents { get; set; }
 }

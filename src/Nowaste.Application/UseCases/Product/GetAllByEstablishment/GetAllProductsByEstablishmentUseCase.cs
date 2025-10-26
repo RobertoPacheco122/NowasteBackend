@@ -25,8 +25,26 @@ public class GetAllProductsByEstablishmentUseCase(
         if (productsEntities.Count == 0)
             throw new NotFoundException("Produtos não encontrados.");
 
-        return _mapper.Map<ICollection<ResponseGetAllProductsByEstablishmentJson>>(
+        var formattedProducts = _mapper.Map<ICollection<ResponseGetAllProductsByEstablishmentJson>>(
             productsEntities
         );
+
+        return
+        [
+            .. formattedProducts.Select(product =>
+            {
+                var actualPriceHistory = productsEntities
+                    .First(pe => pe.Id == product.Id)
+                    .PriceHistories.Where(priceHistory =>
+                        priceHistory.EffectiveDate <= DateTime.UtcNow
+                    )
+                    .OrderByDescending(priceHistory => priceHistory.EffectiveDate)
+                    .FirstOrDefault();
+                product.ActualPriceHistory = _mapper.Map<ResponseGetProductPriceByIdJson>(
+                    actualPriceHistory
+                );
+                return product;
+            }),
+        ];
     }
 }
