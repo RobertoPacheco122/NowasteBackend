@@ -79,6 +79,7 @@ public static class DependencyInjectionExtension
 
         services.AddScoped<IOrderWriteOnlyRepository, OrderWriteOnlyRepository>();
         services.AddScoped<IOrderReadOnlyRepository, OrderReadOnlyRepository>();
+        services.AddScoped<IOrderUpdateOnlyRepository, OrderUpdateOnlyRepository>();
 
         services.AddScoped<IReviewWriteOnlyRepository, ReviewWriteOnlyRepository>();
         services.AddScoped<IReviewReadOnlyRepository, ReviewReadOnlyRepository>();

@@ -36,7 +36,7 @@ public class RegisterOrderUseCase(
     private readonly IAddressReadOnlyRepository _addressReadOnlyRepository =
         addressReadOnlyRepository;
 
-    const int TAX_PER_ORDER = 1000;
+    const int TAX_PER_ORDER = 100;
 
     public async Task<ResponseRegisteredOrderJson> Execute(RequestRegisterOrderJson request)
     {
@@ -58,6 +58,7 @@ public class RegisterOrderUseCase(
         );
 
         var orderEntity = _mapper.Map<OrderEntity>(request);
+        orderEntity.CreatedAt = DateTime.UtcNow;
         orderEntity.Id = Guid.NewGuid();
         orderEntity.Tax = TAX_PER_ORDER;
         orderEntity.OrderStatus = EOrderStatus.Pending;
@@ -151,6 +152,7 @@ public class RegisterOrderUseCase(
             orderItemsEntities.Add(
                 new OrderItemEntity
                 {
+                    CreatedAt = DateTime.UtcNow,
                     ProductName = productEntity.Name,
                     UnitPrice = actualPriceHistory.Price,
                     ItemQuantity = item.ItemQuantity,

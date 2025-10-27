@@ -9,17 +9,17 @@ using Nowaste.Domain.Security.Tokens;
 using Nowaste.Infrastructure;
 using Nowaste.Infrastructure.Extensions;
 using Nowaste.Infrastructure.Migrations;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddCors(options => {
-    options.AddDefaultPolicy(policy => {
-        policy
-            .AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader(); 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
     });
 });
 
@@ -72,6 +72,10 @@ builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
 builder.Services.AddHttpContextAccessor();
 
 var signingKey = builder.Configuration.GetValue<string>("Settings:Jwt:SigningKey");
+
+var stripeSecretKey = builder.Configuration.GetValue<string>("Settings:Stripe:SecretKey");
+
+StripeConfiguration.ApiKey = stripeSecretKey;
 
 builder
     .Services.AddAuthentication(config =>
