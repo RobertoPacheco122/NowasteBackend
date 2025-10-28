@@ -62,6 +62,7 @@ public class RegisterOrderUseCase(
         orderEntity.Id = Guid.NewGuid();
         orderEntity.Tax = TAX_PER_ORDER;
         orderEntity.OrderStatus = EOrderStatus.Pending;
+        orderEntity.PaymentSessionId = string.Empty;
 
         var allPurchasedProductsIds = request.Items.Select(item => item.ProductId).ToList();
 

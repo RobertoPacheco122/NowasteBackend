@@ -1,16 +1,21 @@
 ﻿using Nowaste.Communication.Requests.Order;
 using Nowaste.Communication.Responses.Order;
 using Nowaste.Domain.Entities;
+using Nowaste.Domain.Repositories;
 using Nowaste.Domain.Repositories.Order;
 using Nowaste.Exception.ExceptionBase;
 using Stripe.Checkout;
 
 namespace Nowaste.Application.UseCases.Order.Checkout;
 
-public class OrderCheckoutUseCase(IOrderReadOnlyRepository orderReadOnlyRepository)
-    : IOrderCheckoutUseCase
+public class OrderCheckoutUseCase(
+    IUnitOfWork unitOfWork,
+    IOrderUpdateOnlyRepository orderUpdateOnlyRepository
+) : IOrderCheckoutUseCase
 {
-    private readonly IOrderReadOnlyRepository _orderReadOnlyRepository = orderReadOnlyRepository;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
+    private readonly IOrderUpdateOnlyRepository _orderUpdateOnlyRepository =
+        orderUpdateOnlyRepository;
 
     const string SUCCESS_URL =
         "http://localhost:3000/checkout/success?session_id={CHECKOUT_SESSION_ID}";
@@ -19,11 +24,18 @@ public class OrderCheckoutUseCase(IOrderReadOnlyRepository orderReadOnlyReposito
 
     public async Task<ResponseOrderCheckoutJson> Execute(RequestOrderCheckoutJson request)
     {
-        var orderEntity = await _orderReadOnlyRepository.GetById(request.OrderId);
+        var orderEntity = await _orderUpdateOnlyRepository.GetById(request.OrderId);
 
         Validate(request, orderEntity);
 
         var session = await CreateCheckoutSessionInformations(orderEntity!);
+
+        orderEntity!.PaymentSessionId = session.Id;
+        orderEntity!.UpdatedAt = DateTime.UtcNow;
+
+        _orderUpdateOnlyRepository.Update(orderEntity);
+
+        await _unitOfWork.Commit();
 
         return new ResponseOrderCheckoutJson { SessionId = session.Id, SessionUrl = session.Url };
     }
@@ -59,11 +71,11 @@ public class OrderCheckoutUseCase(IOrderReadOnlyRepository orderReadOnlyReposito
                         Currency = "brl",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
-                            Name = orderItem.ProductName,
+                            Name = $"{orderItem.ProductName} - {orderItem.ItemQuantity} unidade(s)",
                         },
                         UnitAmount = orderItem.Total,
                     },
-                    Quantity = orderItem.ItemQuantity,
+                    Quantity = 1,
                 }
             );
         }
@@ -108,7 +120,7 @@ public class OrderCheckoutUseCase(IOrderReadOnlyRepository orderReadOnlyReposito
             LineItems = lineItems,
             Mode = "payment",
             SuccessUrl = SUCCESS_URL,
-            CancelUrl = CANCEL_URL,
+            CancelUrl = $"{CANCEL_URL}?order_id={orderEntity.Id}",
             Metadata = new Dictionary<string, string> { { "order_id", orderEntity.Id.ToString() } },
         };
 

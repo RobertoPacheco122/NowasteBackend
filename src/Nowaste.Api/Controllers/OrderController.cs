@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Nowaste.Application.UseCases.Order.Checkout;
 using Nowaste.Application.UseCases.Order.ConfirmPayment;
 using Nowaste.Application.UseCases.Order.GetById;
+using Nowaste.Application.UseCases.Order.GetByPaymentSessionId;
 using Nowaste.Application.UseCases.Order.Register;
 using Nowaste.Communication.Requests.Order;
 using Nowaste.Communication.Responses;
@@ -79,6 +80,21 @@ public class OrderController : ControllerBase
     public async Task<IActionResult> GetById(
         [FromServices] IGetOrderByIdUseCase useCase,
         [FromRoute] Guid id
+    )
+    {
+        var response = await useCase.Execute(id);
+
+        return Ok(response);
+    }
+
+    [HttpGet("payment-session/{id}")]
+    [ProducesResponseType(typeof(ResponseGetOrderByIdJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    [Authorize]
+    public async Task<IActionResult> GetByPaymentSessionId(
+        [FromServices] IGetOrderByPaymentSessionIdUseCase useCase,
+        [FromRoute] string id
     )
     {
         var response = await useCase.Execute(id);

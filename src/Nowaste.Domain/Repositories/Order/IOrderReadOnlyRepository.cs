@@ -5,6 +5,7 @@ namespace Nowaste.Domain.Repositories.Order;
 public interface IOrderReadOnlyRepository
 {
     Task<OrderEntity?> GetById(Guid id);
+    Task<OrderEntity?> GetByPaymentSessionId(string id);
     Task<OrderItemEntity?> GetOrderItemById(Guid id);
     Task<int> GetOrdersCountByEstablishment(Guid establishmentId);
 }

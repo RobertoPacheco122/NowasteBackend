@@ -19,6 +19,17 @@ internal class OrderReadOnlyRepository(NowasteDbContext dbContext) : IOrderReadO
             .FirstOrDefaultAsync(order => order.Id.Equals(id));
     }
 
+    public async Task<OrderEntity?> GetByPaymentSessionId(string id)
+    {
+        return await _dbContext
+            .Orders.AsNoTracking()
+            .Include(order => order.Establishment)
+            .Include(order => order.Person)
+            .Include(order => order.OrderItems)
+            .ThenInclude(order => order.Product)
+            .FirstOrDefaultAsync(order => order.PaymentSessionId.Equals(id));
+    }
+
     public async Task<OrderItemEntity?> GetOrderItemById(Guid id)
     {
         return await _dbContext

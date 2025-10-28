@@ -17,6 +17,7 @@ public class OrderEntity : BaseEntity
     public required int Tax { get; set; }
     public int Discount { get; set; }
     public required int Total { get; set; }
+    public string PaymentSessionId { get; set; } = string.Empty;
 
     public Guid PersonId { get; set; }
     public required PersonEntity Person { get; set; }

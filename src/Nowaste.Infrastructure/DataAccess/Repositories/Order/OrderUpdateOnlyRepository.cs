@@ -10,7 +10,12 @@ internal class OrderUpdateOnlyRepository(NowasteDbContext dbContext) : IOrderUpd
 
     public async Task<OrderEntity?> GetById(Guid id)
     {
-        return await _dbContext.Orders.FirstOrDefaultAsync(order => order.Id.Equals(id));
+        return await _dbContext
+            .Orders.Include(order => order.Establishment)
+            .Include(order => order.Person)
+            .Include(order => order.OrderItems)
+            .ThenInclude(order => order.Product)
+            .FirstOrDefaultAsync(order => order.Id.Equals(id));
     }
 
     public void Update(OrderEntity order)

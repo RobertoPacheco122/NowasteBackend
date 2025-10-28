@@ -19,6 +19,7 @@ public class ResponseGetOrderByIdJson
     public required int Tax { get; set; }
     public int Discount { get; set; }
     public required int Total { get; set; }
+    public string PaymentSessionId { get; set; } = string.Empty;
 
     public ResponseGetEstablishmentByIdJson Establishment { get; set; } = null!;
     public ResponseGetPersonByIdJson Person { get; set; } = null!;
