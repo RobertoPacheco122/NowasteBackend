@@ -9,6 +9,7 @@ using Nowaste.Communication.Responses.Address;
 using Nowaste.Communication.Responses.Establishment;
 using Nowaste.Communication.Responses.Order;
 using Nowaste.Communication.Responses.Product;
+using Nowaste.Communication.Responses.Review;
 using Nowaste.Communication.Responses.Users;
 using Nowaste.Domain.Entities;
 
@@ -64,6 +65,8 @@ public class AutoMapping : Profile
 
         CreateMap<EstablishmentEntity, ResponseGetEstablishmentByIdJson>();
         CreateMap<EstablishmentEntity, ResponseAvailableEstablishmentJson>();
+
+        CreateMap<ReviewEntity, ResponseGetReviewByIdJson>();
 
         CreateMap<OrderEntity, ResponseGetOrderByIdJson>();
         CreateMap<OrderItemEntity, ResponseGetOrderItemByIdJson>();

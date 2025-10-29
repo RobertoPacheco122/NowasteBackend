@@ -45,6 +45,9 @@ public class OrderCheckoutUseCase(
         if (order is null)
             throw new NotFoundException("Pedido não encontrado.");
 
+        if (order.IsPaid is true)
+            throw new ErrorOnValidationException(["O pedido já foi pago."]);
+
         var validationResult = new OrderCheckoutValidator().Validate(request);
 
         if (validationResult.IsValid is true)

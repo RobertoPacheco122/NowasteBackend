@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Nowaste.Application.UseCases.Order.Checkout;
 using Nowaste.Application.UseCases.Order.ConfirmPayment;
+using Nowaste.Application.UseCases.Order.GetAllByPerson;
 using Nowaste.Application.UseCases.Order.GetById;
 using Nowaste.Application.UseCases.Order.GetByPaymentSessionId;
 using Nowaste.Application.UseCases.Order.Register;
@@ -70,6 +71,18 @@ public class OrderController : ControllerBase
         var response = await useCase.Execute(request);
 
         return Created(string.Empty, response);
+    }
+
+    [HttpGet("get-all-by-person")]
+    [ProducesResponseType(typeof(ICollection<ResponseGetOrderByIdJson>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    [Authorize]
+    public async Task<IActionResult> GetById([FromServices] IGetAllOrdersByPersonUseCase useCase)
+    {
+        var response = await useCase.Execute();
+
+        return Ok(response);
     }
 
     [HttpGet("{id}")]

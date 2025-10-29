@@ -1,11 +1,13 @@
 ﻿using Nowaste.Communication.Enums;
 using Nowaste.Communication.Responses.Establishment;
+using Nowaste.Communication.Responses.Review;
 using Nowaste.Communication.Responses.Users;
 
 namespace Nowaste.Communication.Responses.Order;
 
 public class ResponseGetOrderByIdJson
 {
+    public Guid Id { get; set; }
     public required string FriendlyId { get; set; } = string.Empty;
     public required DateTime OrderDate { get; set; }
     public EOrderStatus OrderStatus { get; set; }
@@ -24,4 +26,5 @@ public class ResponseGetOrderByIdJson
     public ResponseGetEstablishmentByIdJson Establishment { get; set; } = null!;
     public ResponseGetPersonByIdJson Person { get; set; } = null!;
     public ICollection<ResponseGetOrderItemByIdJson> OrderItems { get; set; } = [];
+    public ResponseGetReviewByIdJson? Review { get; set; }
 }

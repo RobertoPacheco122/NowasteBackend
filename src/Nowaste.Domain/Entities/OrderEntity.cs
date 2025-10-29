@@ -24,4 +24,5 @@ public class OrderEntity : BaseEntity
     public Guid EstablishmentId { get; set; }
     public required EstablishmentEntity Establishment { get; set; }
     public ICollection<OrderItemEntity> OrderItems { get; set; } = [];
+    public ReviewEntity? Review { get; set; }
 }
