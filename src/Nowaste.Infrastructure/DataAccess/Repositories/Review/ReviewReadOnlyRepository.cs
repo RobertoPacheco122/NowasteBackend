@@ -18,6 +18,15 @@ internal class ReviewReadOnlyRepository(NowasteDbContext dbContext) : IReviewRea
         return await _dbContext.Reviews.AnyAsync(review => review.Id.Equals(id));
     }
 
+    public async Task<ICollection<ReviewEntity>> GetAllByEstablishment(Guid id)
+    {
+        return await _dbContext
+            .Reviews.AsNoTracking()
+            .Include(review => review.Person)
+            .Where(review => review.EstablishmentId.Equals(id))
+            .ToListAsync();
+    }
+
     public async Task<ReviewEntity?> GetById(Guid id)
     {
         return await _dbContext

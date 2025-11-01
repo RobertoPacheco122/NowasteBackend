@@ -109,6 +109,9 @@ internal class EstablishmentReadOnlyRepository(NowasteDbContext dbContext)
     {
         return await _dbContext
             .Establishments.AsNoTracking()
+            .Include(establishment => establishment.Reviews)
+            .Include(establishment => establishment.OperatingDays)
+            .Include(establishment => establishment.Addresses)
             .FirstOrDefaultAsync(establishment => establishment.Id == Id);
     }
 

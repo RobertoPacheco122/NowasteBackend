@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Nowaste.Communication.Responses.Address;
 using Nowaste.Communication.Responses.Establishment;
+using Nowaste.Domain.Enums;
 using Nowaste.Domain.Repositories.Establishment;
 using Nowaste.Exception.ExceptionBase;
 
@@ -20,6 +22,22 @@ public class GetEstablishmentByIdUseCase(
             await _establishmentReadOnlyRepository.GetById(establishmentId)
             ?? throw new NotFoundException("Estabelecimento não encontrado.");
 
-        return _mapper.Map<ResponseGetEstablishmentByIdJson>(establishmentEntity);
+        var formattedEstablishment = _mapper.Map<ResponseGetEstablishmentByIdJson>(
+            establishmentEntity
+        );
+
+        var averageRating = establishmentEntity.Reviews.Average(review => review.Rating);
+        var totalReviews = establishmentEntity.Reviews.Count;
+        var operationalAddress = establishmentEntity.Addresses.First(address =>
+            address.AddressType == EAddressType.Operational
+        );
+
+        formattedEstablishment.TotalReviews = totalReviews;
+        formattedEstablishment.AverageRating = averageRating;
+        formattedEstablishment.OperationalAddress = _mapper.Map<ResponseGetAddressByIdJson>(
+            operationalAddress
+        );
+
+        return formattedEstablishment;
     }
 }

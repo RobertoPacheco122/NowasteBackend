@@ -11,6 +11,7 @@ using Nowaste.Application.UseCases.Address.UpdateByInstitution;
 using Nowaste.Application.UseCases.Address.UpdateByPerson;
 using Nowaste.Application.UseCases.Auth.Login;
 using Nowaste.Application.UseCases.Establishment.GetAllAvailableForAddress;
+using Nowaste.Application.UseCases.Establishment.GetAllReviews;
 using Nowaste.Application.UseCases.Establishment.GetById;
 using Nowaste.Application.UseCases.Establishment.Register;
 using Nowaste.Application.UseCases.Establishment.RegisterOperatingDay;
@@ -83,6 +84,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IRegisterOperatingDayUseCase, RegisterOperatingDayUseCase>();
         services.AddScoped<IUpdateOperatingDayUseCase, UpdateOperatingDayUseCase>();
         services.AddScoped<IGetEstablishmentByIdUseCase, GetEstablishmentByIdUseCase>();
+        services.AddScoped<IGetAllEstablishmentReviewsUseCase, GetAllEstablishmentReviewsUseCase>();
         services.AddScoped<
             IGetAvailableEstablishmentForAddressUseCase,
             GetAllAvailableEstablishmentForAddressUseCase

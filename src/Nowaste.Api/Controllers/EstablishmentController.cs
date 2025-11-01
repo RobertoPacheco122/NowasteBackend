@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nowaste.Application.UseCases.Establishment.GetAllAvailableForAddress;
+using Nowaste.Application.UseCases.Establishment.GetAllReviews;
 using Nowaste.Application.UseCases.Establishment.GetById;
 using Nowaste.Application.UseCases.Establishment.Register;
 using Nowaste.Application.UseCases.Establishment.RegisterOperatingDay;
@@ -10,6 +11,7 @@ using Nowaste.Application.UseCases.Establishment.VinculateEmployee;
 using Nowaste.Communication.Requests.Establishment;
 using Nowaste.Communication.Responses;
 using Nowaste.Communication.Responses.Establishment;
+using Nowaste.Communication.Responses.Review;
 using Nowaste.Domain.Enums;
 
 namespace Nowaste.Api.Controllers;
@@ -91,6 +93,20 @@ public class EstablishmentController : ControllerBase
     [Authorize]
     public async Task<IActionResult> GetAllAvailableForAddress(
         [FromServices] IGetAvailableEstablishmentForAddressUseCase useCase,
+        [FromRoute] Guid id
+    )
+    {
+        var response = await useCase.Execute(id);
+
+        return Ok(response);
+    }
+
+    [HttpGet("get-all-reviews/{id}")]
+    [ProducesResponseType(typeof(ICollection<ResponseGetReviewByIdJson>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAllReviews(
+        [FromServices] IGetAllEstablishmentReviewsUseCase useCase,
         [FromRoute] Guid id
     )
     {

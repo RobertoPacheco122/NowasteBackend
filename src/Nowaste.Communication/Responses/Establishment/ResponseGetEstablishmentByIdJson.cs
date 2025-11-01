@@ -18,6 +18,7 @@ public class ResponseGetEstablishmentByIdJson
     public int TotalReviews { get; set; }
     public double AverageRating { get; set; }
     public ResponseGetAddressByIdJson OperationalAddress { get; set; } = new();
+    public ICollection<ResponseGetOperatingDayByIdJson> OperatingDays { get; set; } = [];
     public EEstablishmentStatus Status { get; set; }
     public string Description { get; set; } = string.Empty;
     public int DeliveryFeeInCents { get; set; }

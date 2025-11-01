@@ -1,4 +1,6 @@
-﻿namespace Nowaste.Communication.Responses.Review;
+﻿using Nowaste.Communication.Responses.Users;
+
+namespace Nowaste.Communication.Responses.Review;
 
 public class ResponseGetReviewByIdJson
 {
@@ -9,7 +11,7 @@ public class ResponseGetReviewByIdJson
     public DateTime ReviewDate { get; set; }
     public DateTime? ResponseDate { get; set; }
 
-    public Guid PersonId { get; set; }
+    public ResponseGetPersonByIdJson Person { get; set; } = new();
     public Guid OrderId { get; set; }
     public Guid EstablishmentId { get; set; }
 }

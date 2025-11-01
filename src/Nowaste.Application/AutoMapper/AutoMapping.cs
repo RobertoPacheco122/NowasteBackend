@@ -65,6 +65,7 @@ public class AutoMapping : Profile
 
         CreateMap<EstablishmentEntity, ResponseGetEstablishmentByIdJson>();
         CreateMap<EstablishmentEntity, ResponseAvailableEstablishmentJson>();
+        CreateMap<OperatingDayEntity, ResponseGetOperatingDayByIdJson>();
 
         CreateMap<ReviewEntity, ResponseGetReviewByIdJson>();
 
