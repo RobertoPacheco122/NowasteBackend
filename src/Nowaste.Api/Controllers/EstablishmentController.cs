@@ -5,6 +5,7 @@ using Nowaste.Application.UseCases.Establishment.GetAllReviews;
 using Nowaste.Application.UseCases.Establishment.GetById;
 using Nowaste.Application.UseCases.Establishment.Register;
 using Nowaste.Application.UseCases.Establishment.RegisterOperatingDay;
+using Nowaste.Application.UseCases.Establishment.Stats;
 using Nowaste.Application.UseCases.Establishment.Update;
 using Nowaste.Application.UseCases.Establishment.UpdateOperatingDay;
 using Nowaste.Application.UseCases.Establishment.VinculateEmployee;
@@ -103,10 +104,22 @@ public class EstablishmentController : ControllerBase
 
     [HttpGet("get-all-reviews/{id}")]
     [ProducesResponseType(typeof(ICollection<ResponseGetReviewByIdJson>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAllReviews(
         [FromServices] IGetAllEstablishmentReviewsUseCase useCase,
+        [FromRoute] Guid id
+    )
+    {
+        var response = await useCase.Execute(id);
+
+        return Ok(response);
+    }
+
+    [HttpGet("stats/{id}")]
+    [ProducesResponseType(typeof(ResponseEstablishmentStatsJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetStats(
+        [FromServices] IEstablishmentStatsUseCase useCase,
         [FromRoute] Guid id
     )
     {

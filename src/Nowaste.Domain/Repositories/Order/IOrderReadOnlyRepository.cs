@@ -9,4 +9,6 @@ public interface IOrderReadOnlyRepository
     Task<OrderEntity?> GetByPaymentSessionId(string id);
     Task<OrderItemEntity?> GetOrderItemById(Guid id);
     Task<int> GetOrdersCountByEstablishment(Guid establishmentId);
+    Task<int> GetTotalSalesByEstablishmentId(Guid id);
+    Task<int> GetTotalWasteReducedByEstablishmentId(Guid id);
 }

@@ -57,4 +57,19 @@ internal class OrderReadOnlyRepository(NowasteDbContext dbContext) : IOrderReadO
             .Orders.AsNoTracking()
             .CountAsync(order => order.EstablishmentId.Equals(establishmentId));
     }
+
+    public async Task<int> GetTotalSalesByEstablishmentId(Guid id)
+    {
+        return await _dbContext
+            .Orders.AsNoTracking()
+            .CountAsync(order => order.EstablishmentId.Equals(id) && order.IsPaid);
+    }
+
+    public async Task<int> GetTotalWasteReducedByEstablishmentId(Guid id)
+    {
+        return await _dbContext
+            .OrderItems.AsNoTracking()
+            .Where(orderItem => orderItem.Order.EstablishmentId == id && orderItem.Order.IsPaid)
+            .SumAsync(orderItem => orderItem.Product.WeightInGrams);
+    }
 }
