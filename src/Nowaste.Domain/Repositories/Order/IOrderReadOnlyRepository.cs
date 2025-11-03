@@ -4,6 +4,7 @@ namespace Nowaste.Domain.Repositories.Order;
 
 public interface IOrderReadOnlyRepository
 {
+    Task<ICollection<OrderEntity>> GetAllByEstablishmentId(Guid id);
     Task<ICollection<OrderEntity>> GetAllByPerson(Guid id);
     Task<OrderEntity?> GetById(Guid id);
     Task<OrderEntity?> GetByPaymentSessionId(string id);

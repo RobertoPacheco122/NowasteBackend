@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Nowaste.Application.UseCases.Order.Checkout;
 using Nowaste.Application.UseCases.Order.ConfirmPayment;
+using Nowaste.Application.UseCases.Order.GetAllByEstablishment;
 using Nowaste.Application.UseCases.Order.GetAllByPerson;
 using Nowaste.Application.UseCases.Order.GetById;
 using Nowaste.Application.UseCases.Order.GetByPaymentSessionId;
@@ -73,12 +74,32 @@ public class OrderController : ControllerBase
         return Created(string.Empty, response);
     }
 
+    [HttpGet("get-all-by-establishment")]
+    [ProducesResponseType(
+        typeof(ICollection<ResponseGetAllOrdersByEstablishmentJson>),
+        StatusCodes.Status200OK
+    )]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    [Authorize]
+    public async Task<IActionResult> GetAllByEstablishment(
+        [FromServices] IGetAllOrdersByEstablishmentUseCase useCase
+    )
+    {
+        var response = await useCase.Execute();
+
+        return Ok(response);
+    }
+
     [HttpGet("get-all-by-person")]
     [ProducesResponseType(typeof(ICollection<ResponseGetOrderByIdJson>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     [Authorize]
-    public async Task<IActionResult> GetById([FromServices] IGetAllOrdersByPersonUseCase useCase)
+    public async Task<IActionResult> GetAllByPerson(
+        [FromServices] IGetAllOrdersByPersonUseCase useCase
+    )
     {
         var response = await useCase.Execute();
 

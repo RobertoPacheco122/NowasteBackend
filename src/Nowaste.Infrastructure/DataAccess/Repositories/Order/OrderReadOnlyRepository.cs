@@ -8,6 +8,18 @@ internal class OrderReadOnlyRepository(NowasteDbContext dbContext) : IOrderReadO
 {
     private readonly NowasteDbContext _dbContext = dbContext;
 
+    public async Task<ICollection<OrderEntity>> GetAllByEstablishmentId(Guid id)
+    {
+        return await _dbContext
+            .Orders.AsNoTracking()
+            .Include(order => order.Person)
+            .Include(order => order.Review)
+            .Include(order => order.OrderItems)
+            .ThenInclude(order => order.Product)
+            .Where(order => order.EstablishmentId.Equals(id))
+            .ToListAsync();
+    }
+
     public async Task<ICollection<OrderEntity>> GetAllByPerson(Guid id)
     {
         return await _dbContext

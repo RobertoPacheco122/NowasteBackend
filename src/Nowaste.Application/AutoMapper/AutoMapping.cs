@@ -70,6 +70,7 @@ public class AutoMapping : Profile
         CreateMap<ReviewEntity, ResponseGetReviewByIdJson>();
 
         CreateMap<OrderEntity, ResponseGetOrderByIdJson>();
+        CreateMap<OrderEntity, ResponseGetAllOrdersByEstablishmentJson>();
         CreateMap<OrderItemEntity, ResponseGetOrderItemByIdJson>();
 
         CreateMap<PersonEntity, ResponseGetPersonByIdJson>();

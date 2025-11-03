@@ -21,6 +21,7 @@ using Nowaste.Application.UseCases.Establishment.UpdateOperatingDay;
 using Nowaste.Application.UseCases.Establishment.VinculateEmployee;
 using Nowaste.Application.UseCases.Order.Checkout;
 using Nowaste.Application.UseCases.Order.ConfirmPayment;
+using Nowaste.Application.UseCases.Order.GetAllByEstablishment;
 using Nowaste.Application.UseCases.Order.GetAllByPerson;
 using Nowaste.Application.UseCases.Order.GetById;
 using Nowaste.Application.UseCases.Order.GetByPaymentSessionId;
@@ -111,6 +112,10 @@ public static class DependencyInjectionExtension
 
         services.AddScoped<IRegisterOrderUseCase, RegisterOrderUseCase>();
         services.AddScoped<IOrderCheckoutUseCase, OrderCheckoutUseCase>();
+        services.AddScoped<
+            IGetAllOrdersByEstablishmentUseCase,
+            GetAllOrdersByEstablishmentUseCase
+        >();
         services.AddScoped<IGetAllOrdersByPersonUseCase, GetAllOrdersByPersonUseCase>();
         services.AddScoped<IGetOrderByIdUseCase, GetOrderByIdUseCase>();
         services.AddScoped<IGetOrderByPaymentSessionIdUseCase, GetOrderByPaymentSessionIdUseCase>();
