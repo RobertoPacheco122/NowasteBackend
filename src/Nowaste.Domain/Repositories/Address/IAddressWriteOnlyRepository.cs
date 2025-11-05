@@ -2,6 +2,7 @@
 
 namespace Nowaste.Domain.Repositories.Address;
 
-public interface IAddressWriteOnlyRepository {
+public interface IAddressWriteOnlyRepository
+{
     public Task Add(AddressEntity address);
 }

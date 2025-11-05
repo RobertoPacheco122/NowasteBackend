@@ -9,22 +9,26 @@ using Nowaste.Exception.ExceptionBase;
 namespace Nowaste.Application.UseCases.Users.ChangePassword;
 
 public class ChangePasswordUseCase(
-        IUnitOfWork unitOfWork,
-        ILoggedUser loggedUser,
-        IUserUpdateOnlyRepository userUpdateOnlyRepository,
-        IPasswordEncrypter passwordEncrypter
-    ) : IChangePasswordUseCase {
+    IUnitOfWork unitOfWork,
+    ILoggedUser loggedUser,
+    IUserUpdateOnlyRepository userUpdateOnlyRepository,
+    IPasswordEncrypter passwordEncrypter
+) : IChangePasswordUseCase
+{
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly ILoggedUser _loggedUser = loggedUser;
     private readonly IUserUpdateOnlyRepository _userUpdateOnlyRepository = userUpdateOnlyRepository;
     private readonly IPasswordEncrypter _passwordEncrypter = passwordEncrypter;
 
-    public async Task Execute(RequestChangePasswordJson request) {
+    public async Task Execute(RequestChangePasswordJson request)
+    {
         var authenticatedUser = await _loggedUser.Get();
 
         Validate(request, authenticatedUser);
 
-        var useEntity = await _userUpdateOnlyRepository.GetById(authenticatedUser.Id);
+        var useEntity =
+            await _userUpdateOnlyRepository.GetById(authenticatedUser.Id)
+            ?? throw new NotFoundException("Usuário não encontrado.");
 
         useEntity.PasswordHash = _passwordEncrypter.Encrypt(request.NewPassword);
 
@@ -33,18 +37,22 @@ public class ChangePasswordUseCase(
         await _unitOfWork.Commit();
     }
 
-    private void Validate(RequestChangePasswordJson request, UserEntity loggedUser) {
+    private void Validate(RequestChangePasswordJson request, UserEntity loggedUser)
+    {
         var result = new ChangePasswordValidator().Validate(request);
 
         var passwordMatch = _passwordEncrypter.Verify(request.OldPassword, loggedUser.PasswordHash);
 
         if (passwordMatch is false)
-            result.Errors.Add(new FluentValidation.Results.ValidationFailure(
-                string.Empty,
-                "A senha informada é diferente da senha atual.")
+            result.Errors.Add(
+                new FluentValidation.Results.ValidationFailure(
+                    string.Empty,
+                    "A senha informada é diferente da senha atual."
+                )
             );
 
-        if (!result.IsValid) {
+        if (!result.IsValid)
+        {
             var errorsMessages = result.Errors.Select(f => f.ErrorMessage).ToList();
             throw new ErrorOnValidationException(errorsMessages);
         }

@@ -1,44 +1,65 @@
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Nowaste.Api.Filters;
-using Nowaste.Application;
-using Nowaste.Infrastructure;
-using Nowaste.Infrastructure.Migrations;
-using Nowaste.Infrastructure.Extensions;
-using System.Text;
-using Nowaste.Domain.Security.Tokens;
 using Nowaste.Api.Token;
+using Nowaste.Application;
+using Nowaste.Domain.Security.Tokens;
+using Nowaste.Infrastructure;
+using Nowaste.Infrastructure.Extensions;
+using Nowaste.Infrastructure.Migrations;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });
+});
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(config => {
-    config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
-        Name = "Authorization",
-        Description = @"JWT Authorization header using the Bearer scheme.
+builder.Services.AddSwaggerGen(config =>
+{
+    config.AddSecurityDefinition(
+        "Bearer",
+        new OpenApiSecurityScheme
+        {
+            Name = "Authorization",
+            Description =
+                @"JWT Authorization header using the Bearer scheme.
                       Emter 'Bearer' [space] and then your token in the text input below
                       Example: Bearer 123456abcde",
-        In = ParameterLocation.Header,
-        Scheme = "Bearer",
-        Type = SecuritySchemeType.ApiKey,
-    });
-
-    config.AddSecurityRequirement(new OpenApiSecurityRequirement {
-        {
-            new OpenApiSecurityScheme {
-                Reference = new OpenApiReference {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                },
-                Scheme = "oauth2",
-                Name = "Bearer",
-                In = ParameterLocation.Header
-            },
-            new List<string>()
+            In = ParameterLocation.Header,
+            Scheme = "Bearer",
+            Type = SecuritySchemeType.ApiKey,
         }
-    });
+    );
+
+    config.AddSecurityRequirement(
+        new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer",
+                    },
+                    Scheme = "oauth2",
+                    Name = "Bearer",
+                    In = ParameterLocation.Header,
+                },
+                new List<string>()
+            },
+        }
+    );
 });
 
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
@@ -52,17 +73,26 @@ builder.Services.AddHttpContextAccessor();
 
 var signingKey = builder.Configuration.GetValue<string>("Settings:Jwt:SigningKey");
 
-builder.Services.AddAuthentication(config => {
-    config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(config => {
-    config.TokenValidationParameters = new TokenValidationParameters {
-        ValidateIssuer = false,
-        ValidateAudience = false,
-        ClockSkew = new TimeSpan(0),
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey!))
-    };
-});
+var stripeSecretKey = builder.Configuration.GetValue<string>("Settings:Stripe:SecretKey");
+
+StripeConfiguration.ApiKey = stripeSecretKey;
+
+builder
+    .Services.AddAuthentication(config =>
+    {
+        config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(config =>
+    {
+        config.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ClockSkew = new TimeSpan(0),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey!)),
+        };
+    });
 
 var app = builder.Build();
 
@@ -74,6 +104,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -84,7 +116,8 @@ if (builder.Configuration.IsTestEnvironment() is false)
 
 app.Run();
 
-async Task MigrateDatabase() {
+async Task MigrateDatabase()
+{
     await using var scope = app.Services.CreateAsyncScope();
 
     await DatabaseMigration.MigrateAsync(scope.ServiceProvider);

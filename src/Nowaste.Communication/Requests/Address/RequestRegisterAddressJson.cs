@@ -2,7 +2,8 @@
 
 namespace Nowaste.Communication.Requests.Address;
 
-public class RequestRegisterAddressJson {
+public class RequestRegisterAddressJson
+{
     public string StreetName { get; set; } = string.Empty;
     public string Number { get; set; } = string.Empty;
     public string Complement { get; set; } = string.Empty;
@@ -10,6 +11,8 @@ public class RequestRegisterAddressJson {
     public string City { get; set; } = string.Empty;
     public string State { get; set; } = string.Empty;
     public string ZipCode { get; set; } = string.Empty;
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
     public EAddressType AddressType { get; set; } = EAddressType.Home;
 
     public Guid? PersonId { get; set; }

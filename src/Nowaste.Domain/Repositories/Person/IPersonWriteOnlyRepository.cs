@@ -2,6 +2,7 @@
 
 namespace Nowaste.Domain.Repositories.Person;
 
-public interface IPersonWriteOnlyRepository {
+public interface IPersonWriteOnlyRepository
+{
     Task Add(PersonEntity person);
 }

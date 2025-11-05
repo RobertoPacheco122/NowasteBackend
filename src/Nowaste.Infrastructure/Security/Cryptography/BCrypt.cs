@@ -3,8 +3,10 @@ using BC = BCrypt.Net.BCrypt;
 
 namespace Nowaste.Infrastructure.Security.Cryptography;
 
-public class BCrypt : IPasswordEncrypter {
-    public string Encrypt(string password) {
+public class BCrypt : IPasswordEncrypter
+{
+    public string Encrypt(string password)
+    {
         string passwordHash = BC.HashPassword(password);
 
         return passwordHash;

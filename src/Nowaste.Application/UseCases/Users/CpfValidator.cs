@@ -1,28 +1,36 @@
-﻿using FluentValidation;
+﻿using System.Text.RegularExpressions;
+using FluentValidation;
 using FluentValidation.Validators;
-using System.Text.RegularExpressions;
 
 namespace Nowaste.Application.UseCases.Persons;
 
-public partial class CpfValidator<T> : PropertyValidator<T, string> {
+public partial class CpfValidator<T> : PropertyValidator<T, string>
+{
     private const string ERROR_MESSAGE_KEY = "ErrorMessage";
     public override string Name => "CpfValidator";
 
-    protected override string GetDefaultMessageTemplate(string errorCode) {
+    protected override string GetDefaultMessageTemplate(string errorCode)
+    {
         return $"{{{ERROR_MESSAGE_KEY}}}";
     }
 
-    public override bool IsValid(ValidationContext<T> context, string cpf) {
+    public override bool IsValid(ValidationContext<T> context, string cpf)
+    {
         cpf = CleanCpf().Replace(cpf, "");
 
-        if (string.IsNullOrEmpty(cpf)) {
+        if (string.IsNullOrEmpty(cpf))
+        {
             context.MessageFormatter.AppendArgument(ERROR_MESSAGE_KEY, "O CPF é obrigatório.");
 
             return false;
         }
 
-        if(cpf.Length != 11) {
-            context.MessageFormatter.AppendArgument(ERROR_MESSAGE_KEY, "O CPF deve ter 11 números.");
+        if (cpf.Length != 11)
+        {
+            context.MessageFormatter.AppendArgument(
+                ERROR_MESSAGE_KEY,
+                "O CPF deve ter 11 números."
+            );
 
             return false;
         }
@@ -40,22 +48,23 @@ public partial class CpfValidator<T> : PropertyValidator<T, string> {
         int secondDigitSum = 0;
         int secondDigitReminder;
 
-        for(int i = 0; i < 9; i++)
+        for (int i = 0; i < 9; i++)
             firstDigitSum += int.Parse(temporaryCpf[i].ToString()) * firstDigitMultipliers[i];
-        
+
         firstDigitReminder = firstDigitSum % 11;
         firstDigit = firstDigitReminder < 2 ? 0 : 11 - firstDigitReminder;
         temporaryCpf += firstDigit.ToString();
 
         for (int i = 0; i < 10; i++)
             secondDigitSum += int.Parse(temporaryCpf[i].ToString()) * secondDigitMultipliers[i];
-        
+
         secondDigitReminder = secondDigitSum % 11;
         secondDigit = secondDigitReminder < 2 ? 0 : 11 - secondDigitReminder;
 
         string verifierDigits = $"{firstDigit}{secondDigit}";
 
-        if(!cpf.EndsWith(verifierDigits)) {
+        if (!cpf.EndsWith(verifierDigits))
+        {
             context.MessageFormatter.AppendArgument(ERROR_MESSAGE_KEY, "O CPF é inválido.");
 
             return false;
