@@ -7,9 +7,11 @@ using Nowaste.Application.UseCases.Order.GetAllByPerson;
 using Nowaste.Application.UseCases.Order.GetById;
 using Nowaste.Application.UseCases.Order.GetByPaymentSessionId;
 using Nowaste.Application.UseCases.Order.Register;
+using Nowaste.Application.UseCases.Order.UpdateStatus;
 using Nowaste.Communication.Requests.Order;
 using Nowaste.Communication.Responses;
 using Nowaste.Communication.Responses.Order;
+using Nowaste.Domain.Enums;
 using Stripe;
 
 namespace Nowaste.Api.Controllers;
@@ -134,5 +136,22 @@ public class OrderController : ControllerBase
         var response = await useCase.Execute(id);
 
         return Ok(response);
+    }
+
+    [HttpPut("update-status/{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    [Authorize(Roles = $"{Roles.ESTABLISHMENT_ADMIN},{Roles.ESTABLISHMENT_EMPLOYEE}")]
+    public async Task<IActionResult> UpdateOrderStatus(
+        [FromServices] IUpdateOrderStatusUseCase useCase,
+        [FromRoute] Guid id,
+        [FromBody] RequestUpdateOrderStatusJson request
+    )
+    {
+        await useCase.Execute(id, request);
+
+        return NoContent();
     }
 }

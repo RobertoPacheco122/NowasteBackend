@@ -26,6 +26,7 @@ using Nowaste.Application.UseCases.Order.GetAllByPerson;
 using Nowaste.Application.UseCases.Order.GetById;
 using Nowaste.Application.UseCases.Order.GetByPaymentSessionId;
 using Nowaste.Application.UseCases.Order.Register;
+using Nowaste.Application.UseCases.Order.UpdateStatus;
 using Nowaste.Application.UseCases.Product.GetAllByEstablishment;
 using Nowaste.Application.UseCases.Product.GetAllCategories;
 using Nowaste.Application.UseCases.Product.GetById;
@@ -120,6 +121,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IGetOrderByIdUseCase, GetOrderByIdUseCase>();
         services.AddScoped<IGetOrderByPaymentSessionIdUseCase, GetOrderByPaymentSessionIdUseCase>();
         services.AddScoped<IOrderConfirmPaymentUseCase, OrderConfirmPaymentUseCase>();
+        services.AddScoped<IUpdateOrderStatusUseCase, UpdateOrderStatusUseCase>();
 
         services.AddScoped<IRegisterReviewUseCase, RegisterReviewUseCase>();
         services.AddScoped<

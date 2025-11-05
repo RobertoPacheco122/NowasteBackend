@@ -23,6 +23,12 @@ public class RegisterProductValidator : AbstractValidator<RequestRegisterProduct
             .When(product => product.Price <= 0, ApplyConditionTo.CurrentValidator)
             .WithMessage("O preço não pode ser menor ou igual a zero.");
 
+        RuleFor(product => product.WeightInGrams)
+            .NotEmpty()
+            .WithMessage("A propriedade 'WeightInGrams' é obrigatória.")
+            .When(product => product.WeightInGrams <= 0, ApplyConditionTo.CurrentValidator)
+            .WithMessage("A propriedade 'WeightInGrams' deve ser maior que zero.");
+
         RuleFor(product => product.InventoryTrackingType)
             .IsInEnum()
             .WithMessage("O tipo de controle de estoque é inválido.");
