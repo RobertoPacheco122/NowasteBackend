@@ -27,7 +27,18 @@ public class UpdateProductUseCase(
 
         productEntity.Name = request.Name;
         productEntity.Description = request.Description;
+        productEntity.WeightInGrams = request.WeightInGrams;
+        productEntity.InventoryTrackingType = (Domain.Enums.EProductInventoryTrackingType)
+            request.InventoryTrackingType;
         productEntity.ProductCategoryId = request.ProductCategoryId;
+
+        if (
+            request.InventoryTrackingType
+            is Communication.Enums.EProductInventoryTrackingType.NotApplicable
+        )
+            productEntity.QuantityInStock = null;
+        else
+            productEntity.QuantityInStock = request.QuantityInStock;
 
         _productUpdateOnlyRepository.Update(productEntity);
 

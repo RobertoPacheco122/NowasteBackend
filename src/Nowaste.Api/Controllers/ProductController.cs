@@ -98,6 +98,8 @@ public class ProductController : ControllerBase
     [HttpPut("toggle-is-active/{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(Roles = Roles.ESTABLISHMENT_ADMIN)]
     public async Task<IActionResult> ToggleIsActive(
         [FromServices] IToggleIsProductActiveUseCase useCase,
@@ -125,10 +127,11 @@ public class ProductController : ControllerBase
         return NoContent();
     }
 
-    [HttpPut("price-{id}")]
+    [HttpPut("price/{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [Authorize(Roles = Roles.ESTABLISHMENT_ADMIN)]
     public async Task<IActionResult> UpdatePrice(
         [FromServices] IUpdateProductPriceUseCase useCase,

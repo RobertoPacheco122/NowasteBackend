@@ -12,6 +12,7 @@ public class ResponseGetProductByIdJson
     public bool IsActive { get; set; }
     public int WeightInGrams { get; set; }
     public EProductInventoryTrackingType InventoryTrackingType { get; set; }
+    public ResponseGetProductCategoryByIdJson ProductCategory { get; set; } = new();
     public ResponseGetEstablishmentByIdJson Establishment { get; set; } = new();
     public ResponseGetProductPriceByIdJson ActualPriceHistory { get; set; } = new();
 }
